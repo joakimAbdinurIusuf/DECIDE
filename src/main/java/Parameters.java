@@ -1,5 +1,10 @@
-class Parameters {
+public class Parameters {
+    private double LENGTH1 = 1.0;
+
     public Parameters() {
-        // Implement the Parameters structure
+    }
+
+    public double getLENGTH1() {
+        return LENGTH1;
     }
 }
