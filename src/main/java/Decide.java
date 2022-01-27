@@ -38,6 +38,38 @@ public class Decide {
     }
 
     /**
+     * Check if LIC3 is true.
+     * Calculates the area of every triangle given by three consecutive data points. The area is calculated
+     * with the area formula |Ax(By-Cy)+Bx(Cy-Ay)+Cx(Ay-By)/2| for the three consecutive points A, B, and C.
+     *
+     * @return true if any three consecutive points forms a triangle with larger area than AREA1, false
+     * otherwise
+     */
+    public boolean LIC3() throws IllegalArgumentException {
+        if (parameters.getAREA1() < 0) {
+            throw new IllegalArgumentException("AREA1 cannot be negative.");
+        }
+
+        double triangleArea;
+        double firstTerm;
+        double secondTerm;
+        double thirdTerm;
+
+        for (int i = 0; i < numpoints-2; i++){
+            firstTerm = points[i][0] * (points[i+1][1] - points[i+2][1]);
+            secondTerm = points[i+1][0] * (points[i+2][1] - points[i][1]);
+            thirdTerm = points[i+2][0] * (points[i][1] - points[i+2][1]);
+
+            triangleArea = Math.abs(firstTerm + secondTerm + thirdTerm)/2;
+
+            if (Double.compare(triangleArea, parameters.getAREA1()) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Check if LIC5 is true.
      *
      * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
@@ -52,30 +84,4 @@ public class Decide {
         return false;
     }
 
-    /**
-     * Check if LIC3 is true.
-     * Calculates the area of every triangle given by three consecutive data points. The area is calculated
-     * with the area formula |Ax(By-Cy)+Bx(Cy-Ay)+Cx(Ay-By)/2| for the three consecutive points A, B, and C.
-     *
-     * @return true if any three consecutive points forms a triangle with larger area than AREA1, false
-     * otherwise
-    */
-    public boolean LIC3() {
-        if (parameters.getAREA1() < 0) {
-            return false;
-        }
-
-        double triangleArea;
-
-        for (int i = 0; i < numpoints-2; i++){
-            triangleArea = Math.abs((points[i][0] * (points[i+1][1] - points[i+2][1]) +
-                                    points[i+1][0] * (points[i+2][1] - points[i][1]) +
-                                    points[i+2][0] * (points[i][1] - points[i+2][1])) / 2);
-
-            if (Double.compare(triangleArea, parameters.getAREA1()) > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
