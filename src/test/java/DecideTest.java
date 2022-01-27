@@ -25,12 +25,19 @@ public class DecideTest {
     }
 
     @Test
-    public void givenLENGTH1IsLessThanZero_whenLIC0_thenAssertFalse() {
+    public void givenLENGTH1IsLessThanZero_whenLIC0_thenExceptionIsThrownAndMessagePrinted() {
         double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC0False = decide.LIC0();
-        assertFalse(LIC0False);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC0();
+        });
+
+        String expectedMessage = "LENGTH1 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
