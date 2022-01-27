@@ -43,6 +43,44 @@ public class DecideTest {
     }
 
     @Test
+    public void givenAreaOfThreeConsecutivePointsGreaterThanAREA1_whenLIC3_thenAssertTrue() {
+        double[][] points = new double[][]{{1.0, 3.0}, {-10.0, -1.0}, {8.0, 15.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC3True = decide.LIC3();
+        assertTrue(LIC3True);
+    }
+
+    @Test
+    public void givenAreaOfThreeConsecutivePointsEqualToAREA1_whenLIC3_thenAssertFalse() {
+        double[][] points = new double[][]{{0.0, 0.0}, {10.0, 0.0}, {0.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC3False = decide.LIC3();
+        assertFalse(LIC3False);
+    }
+
+    @Test
+    public void givenAREA1IsLessThanZero_whenLIC3_thenExceptionIsThrownAndMessagePrinted() {
+        double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC3();
+        });
+
+        String expectedMessage = "AREA1 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     public void givenExistsTwoConsecutivePointsWhereXjMinusXiIsLessThanZero_whenLIC5_thenAssertTrue() {
         double[][] points = new double[][]{{10.0, 1.0}, {5.0, 1.0}};
         int numpoints = points.length;
