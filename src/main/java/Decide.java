@@ -13,7 +13,7 @@ public class Decide {
         System.out.println("NO");
     }
 
-    private boolean LIC0() {
+    public boolean LIC0() {
         if (parameters.getLENGTH1() < 0) {
             return false;
         }
