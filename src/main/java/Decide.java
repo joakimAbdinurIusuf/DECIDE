@@ -25,10 +25,14 @@ public class Decide {
             return false;
         }
 
+        double xDifference;
+        double yDifference;
+        double distance;
+
         for (int i = 0; i < numpoints - 1; i++) {
-            double xDifference = Math.abs(points[i + 1][0] - points[i][0]);
-            double yDifference = Math.abs(points[i + 1][1] - points[i][1]);
-            double distance = Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+            xDifference = Math.abs(points[i + 1][0] - points[i][0]);
+            yDifference = Math.abs(points[i + 1][1] - points[i][1]);
+            distance = Math.sqrt(xDifference * xDifference + yDifference * yDifference);
 
             if (Double.compare(distance, parameters.getLENGTH1()) > 0) {
                 return true;
@@ -43,8 +47,10 @@ public class Decide {
      * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
      */
     public boolean LIC5() {
+        double xDifference;
+
         for(int i = 0; i < numpoints - 1; i++) {
-            double xDifference = points[i + 1][0] - points[i][0];
+            xDifference = points[i + 1][0] - points[i][0];
             if (xDifference < 0) {
                 return true;
             }
