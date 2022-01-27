@@ -13,6 +13,13 @@ public class Decide {
         System.out.println("NO");
     }
 
+    /**
+     * Check if LIC0 is true.
+     * Uses the distance formula to compute the distance between two consecutive data points.
+     *
+     * @return true if there exists two consecutive data points with a distance greater than LENGTH1,
+     * false otherwise.
+     */
     public boolean LIC0() {
         if (parameters.getLENGTH1() < 0) {
             return false;
