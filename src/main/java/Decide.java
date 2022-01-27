@@ -10,7 +10,13 @@ public class Decide {
     }
 
     public void DECIDE() {
-        System.out.println("NO");
+        try {
+            // Code to call LIC-methods will be added later
+            System.out.println("NO");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input: " + e.getMessage() );
+        }
+
     }
 
     /**
@@ -20,9 +26,9 @@ public class Decide {
      * @return true if there exists two consecutive data points with a distance greater than LENGTH1,
      * false otherwise.
      */
-    public boolean LIC0() {
+    public boolean LIC0() throws IllegalArgumentException {
         if (parameters.getLENGTH1() < 0) {
-            return false;
+            throw new IllegalArgumentException("LENGTH1 cannot be negative.");
         }
 
         for (int i = 0; i < numpoints - 1; i++) {
