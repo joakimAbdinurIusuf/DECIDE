@@ -30,5 +30,4 @@ public class DecideTest {
     public void LIC0Fail() {
         assertEquals(1, 2+2);
     }
-
 }
