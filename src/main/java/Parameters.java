@@ -1,6 +1,6 @@
 public class Parameters {
     private double LENGTH1;
-    private double RADUIS1;
+    private double RADIUS1;
     private double EPSILON;
     private double AREA1;
     private int Q_PTS;
@@ -19,14 +19,14 @@ public class Parameters {
     private double RADIUS2;
     private double AREA2;
 
-    public Parameters(double l1, double r1, double e, double a1, int qp, int q, double d, int n, int k, int a, int b, int c, int d, int e, int f, int g, double l2, double r2, double a2) {
+    public Parameters(double l1, double r1, double ep, double a1, int qp, int q, double dist, int n, int k, int a, int b, int c, int d, int e, int f, int g, double l2, double r2, double a2) {
         this.LENGTH1 = l1;
         this.RADIUS1 = r1;
-        this.EPSILON = e;
+        this.EPSILON = ep;
         this.AREA1 = a1;
         this.Q_PTS = qp;
         this.QUADS = q;
-        this.DIST = d;
+        this.DIST = dist;
         this.N_PTS = n;
         this.K_PTS = k;
         this.A_PTS = a;
