@@ -19,6 +19,10 @@ public class Parameters {
     private double RADIUS2;
     private double AREA2;
 
+    public Parameters(double LENGTH1) {
+        this.LENGTH1 = LENGTH1;
+    }
+
     public Parameters(double l1, double r1, double ep, double a1, int qp, int q, double dist, int n, int k, int a, int b, int c, int d, int e, int f, int g, double l2, double r2, double a2) {
         this.LENGTH1 = l1;
         this.RADIUS1 = r1;
