@@ -29,7 +29,23 @@ public class Decide {
             double xDifference = Math.abs(points[i + 1][0] - points[i][0]);
             double yDifference = Math.abs(points[i + 1][1] - points[i][1]);
             double distance = Math.sqrt(xDifference * xDifference + yDifference * yDifference);
-            if (distance > parameters.getLENGTH1()) {
+
+            if (Double.compare(distance, parameters.getLENGTH1()) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if LIC5 is true.
+     *
+     * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
+     */
+    public boolean LIC5() {
+        for(int i = 0; i < numpoints - 1; i++) {
+            double xDifference = points[i + 1][0] - points[i][0];
+            if (xDifference < 0) {
                 return true;
             }
         }
