@@ -26,9 +26,9 @@ public class Decide {
      * @return true if there exists two consecutive data points with a distance greater than LENGTH1,
      * false otherwise.
      */
-    public boolean LIC0() throws IllegalArgumentException {
+    public boolean LIC0() throws IllegalParameterObjectException {
         if (parameters.getLENGTH1() < 0) {
-            throw new IllegalArgumentException("LENGTH1 cannot be negative.");
+            throw new IllegalParameterObjectException("LENGTH1 cannot be negative.");
         }
 
         double xDifference;
@@ -55,9 +55,9 @@ public class Decide {
      * @return true if any three consecutive points forms a triangle with larger area than AREA1, false
      * otherwise
      */
-    public boolean LIC3() throws IllegalArgumentException {
+    public boolean LIC3() throws IllegalParameterObjectException {
         if (parameters.getAREA1() < 0) {
-            throw new IllegalArgumentException("AREA1 cannot be negative.");
+            throw new IllegalParameterObjectException("AREA1 cannot be negative.");
         }
 
         double triangleArea;
@@ -85,7 +85,7 @@ public class Decide {
      * @return true if there exists at least one set of Q_PTS consecutive data points
      * that lie in more than QUADS quadrants, false otherwise.
      */
-    public boolean LIC4() throws IllegalArgumentException {
+    public boolean LIC4() throws IllegalParameterObjectException {
         throwExceptionsLIC4();
 
         for (int i = 0; i <= numpoints - parameters.getQ_PTS(); i++) {
@@ -133,18 +133,18 @@ public class Decide {
                 || (points[i + j][0] == 0 && points[i + j][1] > 0) || (points[i + j][0] > 0 && points[i + j][1] > 0);
     }
 
-    private void throwExceptionsLIC4() {
+    private void throwExceptionsLIC4() throws IllegalParameterObjectException {
         if (parameters.getQ_PTS() < 2) {
-            throw new IllegalArgumentException("Q_PTS must be greater than or equal to 2.");
+            throw new IllegalParameterObjectException("Q_PTS must be greater than or equal to 2.");
         }
         if (parameters.getQ_PTS() > numpoints) {
-            throw new IllegalArgumentException("Q_PTS must be less than than or equal to numpoints.");
+            throw new IllegalParameterObjectException("Q_PTS must be less than than or equal to numpoints.");
         }
         if (parameters.getQUADS() < 1) {
-            throw new IllegalArgumentException("QUADS must be greater than or equal to 1.");
+            throw new IllegalParameterObjectException("QUADS must be greater than or equal to 1.");
         }
         if (parameters.getQUADS() > 3) {
-            throw new IllegalArgumentException("QUADS must be less than than or equal to 3.");
+            throw new IllegalParameterObjectException("QUADS must be less than than or equal to 3.");
         }
     }
 
@@ -162,6 +162,15 @@ public class Decide {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * Check if LIC7 is true.
+     *
+     * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
+     */
+    public boolean LIC7() {
         return false;
     }
 }
