@@ -87,24 +87,50 @@ public class Decide {
      */
     public boolean LIC4() throws IllegalArgumentException {
         throwExceptionsLIC4();
-        return false;
-    }
 
-    /**
-     * Check if LIC5 is true.
-     *
-     * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
-     */
-    public boolean LIC5() {
-        double xDifference;
+        for (int i = 0; i <= numpoints - parameters.getQ_PTS(); i++) {
+            int isInFirstQuad = 0, isInSecondQuad = 0, isInThirdQuad = 0, isInFourthQuad = 0;
+            int numOfQuadrantsThatContainPoint = 0;
 
-        for(int i = 0; i < numpoints - 1; i++) {
-            xDifference = points[i + 1][0] - points[i][0];
-            if (xDifference < 0) {
+            for (int j = 0; j < parameters.getQ_PTS(); j++) {
+                if (dataPointIsInFirstQuadrant(i, j)) {
+                    isInFirstQuad = 1;
+                } else if (dataPointIsInSecondQuadrant(i, j)) {
+                    isInSecondQuad = 1;
+                } else if (dataPointIsInThirdQuadrant(i, j)) {
+                    isInThirdQuad = 1;
+                } else if (dataPointIsInFourthQuadrant(i, j)) {
+                    isInFourthQuad = 1;
+                }
+            }
+            numOfQuadrantsThatContainPoint = isInFirstQuad + isInSecondQuad + isInThirdQuad + isInFourthQuad;
+
+            if (numOfQuadrantsThatContainPoint > parameters.getQUADS()) {
                 return true;
             }
         }
         return false;
+    }
+
+    // If (x>0, y<0) then the data point is in quadrant 4.
+    private boolean dataPointIsInFourthQuadrant(int i, int j) {
+        return points[i + j][0] > 0 && points[i + j][1] < 0;
+    }
+
+    // If (0, y<0) or (x<0, y<0) then the data point is in quadrant 3.
+    private boolean dataPointIsInThirdQuadrant(int i, int j) {
+        return (points[i + j][0] == 0 && points[i + j][1] < 0) || (points[i + j][0] < 0 && points[i + j][1] < 0);
+    }
+
+    // If (x<0, 0) or (x<0, y>0) then the data point is in quadrant 2.
+    private boolean dataPointIsInSecondQuadrant(int i, int j) {
+        return (points[i + j][0] < 0 && points[i + j][1] == 0) || (points[i + j][0] < 0 && points[i + j][1] > 0);
+    }
+
+    // If (0, 0) or (x>0, 0) or (0, y>0) or (x>0, y>0) then the data point is in quadrant 1.
+    private boolean dataPointIsInFirstQuadrant(int i, int j) {
+        return (points[i + j][0] == 0 && points[i + j][1] == 0) || (points[i + j][0] > 0 && points[i + j][1] == 0)
+                || (points[i + j][0] == 0 && points[i + j][1] > 0) || (points[i + j][0] > 0 && points[i + j][1] > 0);
     }
 
     private void throwExceptionsLIC4() {
@@ -120,5 +146,22 @@ public class Decide {
         if (parameters.getQUADS() > 3) {
             throw new IllegalArgumentException("QUADS must be less than than or equal to 3.");
         }
+    }
+
+    /**
+     * Check if LIC5 is true.
+     *
+     * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
+     */
+    public boolean LIC5() {
+        double xDifference;
+
+        for (int i = 0; i < numpoints - 1; i++) {
+            xDifference = points[i + 1][0] - points[i][0];
+            if (xDifference < 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }
