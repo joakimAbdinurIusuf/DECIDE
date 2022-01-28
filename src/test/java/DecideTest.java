@@ -104,7 +104,7 @@ public class DecideTest {
     public void givenDistanceBetweenPointAndLineGreaterThanDISTInSetOfNPTSConsecutivePoints_whenLIC6_thenAssertTrue() {
         double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC6True = decide.LIC6();
         assertTrue(LIC6True);
@@ -114,18 +114,28 @@ public class DecideTest {
     public void givenDoesNotExistDistanceBetweenPointAndLineGreaterThanDISTInSetOfNPTSConsecutivePoints_whenLIC6_thenAssertFalse() {
         double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 10, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC6False = decide.LIC6();
         assertFalse(LIC6False);
     }
 
     @Test
+    public void givenDistanceBetweenPointAndCoincidingPointsGreaterThanDISTInSetOfNPTSConsecutivePoints_whenLIC6_thenAssertTrue() {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {2.0, 2.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC6True = decide.LIC6();
+        assertTrue(LIC6True);
+    }
+
+    @Test
     public void givenDISTIsLessThanZero_whenLIC6_thenExceptionIsThrownAndMessagePrinted() {
-        double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
 
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, -1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
