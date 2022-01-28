@@ -90,7 +90,50 @@ public class DecideTest {
     // LIC4
 
     @Test
-    public void givenQ_PTSIsLessThan2_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+    public void LIC4PositiveCase() {
+        double[][] points = new double[][]{{1.0, 1.0}, {-1.0, 1.0}, {-1.0, -1.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC4True = decide.LIC5();
+        assertTrue(LIC4True);
+    }
+
+    @Test
+    public void LIC4PositiveCaseAmbiguous() {
+        double[][] points = new double[][]{{0.0, 1.0}, {-1.0, 0.0}, {0.0, -1.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC4True = decide.LIC5();
+        assertTrue(LIC4True);
+    }
+
+    @Test
+    public void LIC4NegativeCase() {
+        double[][] points = new double[][]{{-2.0, -3.0}, {-1.0, 1.0}, {-1.0, -1.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC4False = decide.LIC5();
+        assertFalse(LIC4False);
+    }
+
+    @Test
+    public void LIC4NegativeCaseAmbiguous() {
+        double[][] points = new double[][]{{0.0, -3.0}, {-2.0, 0.0}, {0.0, -1.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC4False = decide.LIC5();
+        assertFalse(LIC4False);
+    }
+
+    /**
+     * Test if LIC4 throws exception when Q_PTS < 2.
+     */
+    @Test
+    public void LIC4Exception1() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -106,8 +149,11 @@ public class DecideTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    /**
+     * Test if LIC4 throws exception when Q_PTS > numpoints.
+     */
     @Test
-    public void givenQ_PTSIsGreaterThanNumpoints_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+    public void LIC4Exception2() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, numpoints + 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -123,8 +169,11 @@ public class DecideTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    /**
+     * Test if LIC4 throws exception when QUADS < 0.
+     */
     @Test
-    public void givenQUADSIsLessThan1_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+    public void LIC4Exception3() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -140,8 +189,11 @@ public class DecideTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    /**
+     * Test if LIC4 throws exception when QUADS > 3.
+     */
     @Test
-    public void givenQUADSIsGreaterThan3_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+    public void LIC4Exception4() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -156,18 +208,6 @@ public class DecideTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
-    /*
-    @Test
-    public void givenExistsQ_PTSConsecutivePointsThatLieInMoreThanQUADSQuadrantsClear_whenLIC4_thenAssertTrue() {
-        double[][] points = new double[][]{{1.0, 1.0}, {-1.0, 1.0}, {-1.0, -1.0}};
-        int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC5True = decide.LIC5();
-        assertTrue(LIC5True);
-    }
-    */
 
     // LIC5
 
