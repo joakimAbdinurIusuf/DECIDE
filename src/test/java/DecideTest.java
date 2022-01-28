@@ -89,43 +89,59 @@ public class DecideTest {
 
     // LIC4
 
+    /**
+     * Check that LIC4 returns true when there exists a set of Q_PTS consecutive data points
+     * that lie in more than QUADS quadrants.
+     */
     @Test
     public void LIC4PositiveCase() {
         double[][] points = new double[][]{{1.0, 1.0}, {2.0, 2.0}, {-1.0, 1.0}, {-1.0, -1.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC4True = decide.LIC5();
+        boolean LIC4True = decide.LIC4();
         assertTrue(LIC4True);
     }
 
+    /**
+     * Check that LIC4 returns true when there exists a set of Q_PTS consecutive data points
+     * that lie in more than QUADS quadrants, and the data points are ambiguous.
+     */
     @Test
     public void LIC4PositiveCaseAmbiguous() {
         double[][] points = new double[][]{{0.0, 1.0}, {0.0, 2.0}, {-1.0, 0.0}, {0.0, -1.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC4True = decide.LIC5();
+        boolean LIC4True = decide.LIC4();
         assertTrue(LIC4True);
     }
 
+    /**
+     * Check that LIC4 returns false when there does not exist a set of Q_PTS consecutive data points
+     * that lie in more than QUADS quadrants.
+     */
     @Test
     public void LIC4NegativeCase() {
         double[][] points = new double[][]{{-2.0, -5.0}, {-2.0, -3.0}, {-1.0, 1.0}, {-1.0, -1.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC4False = decide.LIC5();
+        boolean LIC4False = decide.LIC4();
         assertFalse(LIC4False);
     }
 
+    /**
+     * Check that LIC4 returns false when there does not exist a set of Q_PTS consecutive data points
+     * that lie in more than QUADS quadrants, and the data points are ambiguous.
+     */
     @Test
     public void LIC4NegativeCaseAmbiguous() {
-        double[][] points = new double[][]{{0.0, -3.0}, {-2.0, 0.0}, {0.0, -1.0}};
+        double[][] points = new double[][]{{0.0, -3.0}, {-1.0, 1.0}, {-1.0, -1.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC4False = decide.LIC5();
+        boolean LIC4False = decide.LIC4();
         assertFalse(LIC4False);
     }
 
@@ -176,7 +192,7 @@ public class DecideTest {
     public void LIC4Exception3() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, numpoints, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -196,7 +212,7 @@ public class DecideTest {
     public void LIC4Exception4() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, numpoints, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
