@@ -136,9 +136,7 @@ public class Decide {
                 currentP = points[j];
 
                 if ((Double.compare(firstP[0],lastP[0])==0) & (Double.compare(firstP[1],lastP[1])==0)) {
-                    xDifference = Math.abs(currentP[0] - firstP[0]);
-                    yDifference = Math.abs(currentP[1] - firstP[1]);
-                    distance = Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+                    distance = distanceBetween2Points(firstP,currentP);
                 } else {
                     numerator = Math.abs((lastP[0] - firstP[0]) * (firstP[1] - currentP[1]) - (firstP[0] - currentP[0]) * (lastP[1] - firstP[1]));
                     denominator = Math.sqrt(Math.pow(lastP[0] - firstP[0], 2) + Math.pow(lastP[1] - firstP[1], 2));
@@ -152,6 +150,13 @@ public class Decide {
             }
 
         return false;
+    }
+
+    public double distanceBetween2Points(double[] point1, double[] point2) {
+        double xDifference = Math.abs(point2[0] - point1[0]);
+        double yDifference = Math.abs(point2[1] - point1[1]);
+
+        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
     }
 
 }
