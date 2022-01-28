@@ -91,7 +91,7 @@ public class DecideTest {
 
     @Test
     public void LIC4PositiveCase() {
-        double[][] points = new double[][]{{1.0, 1.0}, {-1.0, 1.0}, {-1.0, -1.0}};
+        double[][] points = new double[][]{{1.0, 1.0}, {2.0, 2.0}, {-1.0, 1.0}, {-1.0, -1.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
@@ -101,7 +101,7 @@ public class DecideTest {
 
     @Test
     public void LIC4PositiveCaseAmbiguous() {
-        double[][] points = new double[][]{{0.0, 1.0}, {-1.0, 0.0}, {0.0, -1.0}};
+        double[][] points = new double[][]{{0.0, 1.0}, {0.0, 2.0}, {-1.0, 0.0}, {0.0, -1.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
@@ -111,7 +111,7 @@ public class DecideTest {
 
     @Test
     public void LIC4NegativeCase() {
-        double[][] points = new double[][]{{-2.0, -3.0}, {-1.0, 1.0}, {-1.0, -1.0}};
+        double[][] points = new double[][]{{-2.0, -5.0}, {-2.0, -3.0}, {-1.0, 1.0}, {-1.0, -1.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
