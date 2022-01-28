@@ -86,12 +86,7 @@ public class Decide {
      * that lie in more than QUADS quadrants, false otherwise.
      */
     public boolean LIC4() throws IllegalArgumentException {
-        if (parameters.getQ_PTS() < 2) {
-            throw new IllegalArgumentException("Q_PTS must be greater than or equal to 2.");
-        }
-        if (parameters.getQ_PTS() > numpoints) {
-            throw new IllegalArgumentException("Q_PTS must be less than than or equal to numpoints.");
-        }
+        throwExceptionsLIC4();
         return false;
     }
 
@@ -112,4 +107,18 @@ public class Decide {
         return false;
     }
 
+    private void throwExceptionsLIC4() {
+        if (parameters.getQ_PTS() < 2) {
+            throw new IllegalArgumentException("Q_PTS must be greater than or equal to 2.");
+        }
+        if (parameters.getQ_PTS() > numpoints) {
+            throw new IllegalArgumentException("Q_PTS must be less than than or equal to numpoints.");
+        }
+        if (parameters.getQUADS() < 1) {
+            throw new IllegalArgumentException("QUADS must be greater than or equal to 1.");
+        }
+        if (parameters.getQUADS() > 3) {
+            throw new IllegalArgumentException("QUADS must be less than than or equal to 3.");
+        }
+    }
 }
