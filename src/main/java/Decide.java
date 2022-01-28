@@ -96,4 +96,62 @@ public class Decide {
         return false;
     }
 
+    /**
+     * Check if LIC6 is true.
+     * Uses formula for calculating distance between a line (given in two points firstP and lastP)
+     * and another point currentP.
+     *
+     * @return true if there exists a set of N_PTS consecutive points where the distance between
+     * a data point to the line joining the first and last point is greater than DIST, false
+     * otherwise.
+     */
+    public boolean LIC6() throws IllegalArgumentException {
+        if (parameters.getDIST() < 0) {
+            throw new IllegalArgumentException("DIST cannot be negative.");
+        } else if (parameters.getN_PTS() < 3) {
+            throw new IllegalArgumentException("N_PTS cannot be smaller than 3.");
+        } else if (parameters.getN_PTS() > numpoints) {
+            throw new IllegalArgumentException("N_PTS cannot be larger than number of data points.");
+        } else if (numpoints < 3) {
+            return false;
+        }
+
+        int N_PTS = parameters.getN_PTS();
+        double[] firstP;
+        double[] lastP;
+        int lastPIndex;
+        double[] currentP;
+        double numerator;
+        double denominator;
+        double distance;
+        double xDifference;
+        double yDifference;
+
+        for (int i = 0; i < numpoints-(N_PTS-1); i++) {
+            firstP = points[i];
+            lastPIndex = i+N_PTS-1;
+            lastP = points[lastPIndex];
+
+            for (int j = i + 1; j < lastPIndex; j++) {
+                currentP = points[j];
+
+                if ((Double.compare(firstP[0],lastP[0])==0) & (Double.compare(firstP[1],lastP[1])==0)) {
+                    xDifference = Math.abs(currentP[0] - firstP[0]);
+                    yDifference = Math.abs(currentP[1] - firstP[1]);
+                    distance = Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+                } else {
+                    numerator = Math.abs((lastP[0] - firstP[0]) * (firstP[1] - currentP[1]) - (firstP[0] - currentP[0]) * (lastP[1] - firstP[1]));
+                    denominator = Math.sqrt(Math.pow(lastP[0] - firstP[0], 2) + Math.pow(lastP[1] - firstP[1], 2));
+                    distance = numerator / denominator;
+                }
+
+                if (Double.compare(distance, parameters.getDIST()) > 0) {
+                    return true;
+                }
+            }
+            }
+
+        return false;
+    }
+
 }
