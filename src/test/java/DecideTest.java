@@ -246,7 +246,7 @@ public class DecideTest {
         boolean LIC5False = decide.LIC5();
         assertFalse(LIC5False);
     }
-
+  
     // LIC6
 
     // LIC7
@@ -264,4 +264,15 @@ public class DecideTest {
     // LIC13
 
     // LIC14
+
+    /**
+     * Tests so that given a CMV the PUM function outputs the correct PUM vector.
+     */
+    @Test
+    public void givenCMV_whenPUM_thenCorrectPUM() {
+        boolean[] CMV = new boolean[]{ true, false };
+        LCM lcm = new LCM(new Logic[][]{ { Logic.ANDD, Logic.ORR }, { Logic.NOTUSED, Logic.ANDD } });
+        Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), lcm, new boolean[]{});
+        assertArrayEquals(new boolean[][]{ { true, true }, { true, false } }, d.PUM(CMV));
+    }
 }

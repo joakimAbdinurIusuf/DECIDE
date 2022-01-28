@@ -2,11 +2,13 @@ public class Decide {
     private Parameters parameters;
     private double[][] points;
     private int numpoints;
+    private LCM lcm;
 
     public Decide(int numpoints, double[][] points, Parameters parameters, LCM lcm, boolean[] puv) {
         this.numpoints = numpoints;
         this.points = points;
         this.parameters = parameters;
+        this.lcm = lcm;
     }
 
     public void DECIDE() {
@@ -163,5 +165,16 @@ public class Decide {
             }
         }
         return false;
+    }
+
+    public boolean[][] PUM(boolean[] CMV) {
+        boolean[][] PUM;
+        PUM = new boolean[CMV.length][CMV.length];
+        for (int i = 0; i < CMV.length; i++) {
+            for (int j = 0; j < CMV.length; j++) {
+                PUM[i][j] = lcm.operate(i, j, CMV);
+            }
+        }
+        return PUM;
     }
 }
