@@ -80,6 +80,22 @@ public class Decide {
     }
 
     /**
+     * Check if LIC4 is true.
+     *
+     * @return true if there exists at least one set of Q_PTS consecutive data points
+     * that lie in more than QUADS quadrants, false otherwise.
+     */
+    public boolean LIC4() throws IllegalArgumentException {
+        if (parameters.getQ_PTS() < 2) {
+            throw new IllegalArgumentException("Q_PTS must be greater than or equal to 2.");
+        }
+        if (parameters.getQ_PTS() > numpoints) {
+            throw new IllegalArgumentException("Q_PTS must be less than than or equal to numpoints.");
+        }
+        return false;
+    }
+
+    /**
      * Check if LIC5 is true.
      *
      * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
