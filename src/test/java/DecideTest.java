@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DecideTest {
 
+    // LIC0
+
     @Test
     public void givenDistanceGreaterThanLENGTH1BetweenTwoConsecutivePoints_whenLIC0_thenAssertTrue() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
@@ -42,6 +44,12 @@ public class DecideTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    // LIC1
+
+    // LIC2
+
+    // LIC3
+
     @Test
     public void givenAreaOfThreeConsecutivePointsGreaterThanAREA1_whenLIC3_thenAssertTrue() {
         double[][] points = new double[][]{{1.0, 3.0}, {-10.0, -1.0}, {8.0, 15.0}};
@@ -65,7 +73,6 @@ public class DecideTest {
     @Test
     public void givenAREA1IsLessThanZero_whenLIC3_thenExceptionIsThrownAndMessagePrinted() {
         double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
-
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
@@ -79,6 +86,90 @@ public class DecideTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+    // LIC4
+
+    @Test
+    public void givenQ_PTSIsLessThan2_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+        double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC4();
+        });
+
+        String expectedMessage = "Q_PTS must be greater than or equal to 2.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void givenQ_PTSIsGreaterThanNumpoints_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+        double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, numpoints + 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC4();
+        });
+
+        String expectedMessage = "Q_PTS must be less than than or equal to numpoints.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void givenQUADSIsLessThan1_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+        double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC4();
+        });
+
+        String expectedMessage = "QUADS must be greater than or equal to 1.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void givenQUADSIsGreaterThan3_whenLIC4_thenExceptionIsThrownAndMessagePrinted() {
+        double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC4();
+        });
+
+        String expectedMessage = "QUADS must be less than than or equal to 3.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /*
+    @Test
+    public void givenExistsQ_PTSConsecutivePointsThatLieInMoreThanQUADSQuadrantsClear_whenLIC4_thenAssertTrue() {
+        double[][] points = new double[][]{{1.0, 1.0}, {-1.0, 1.0}, {-1.0, -1.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC5True = decide.LIC5();
+        assertTrue(LIC5True);
+    }
+    */
+
+    // LIC5
 
     @Test
     public void givenExistsTwoConsecutivePointsWhereXjMinusXiIsLessThanZero_whenLIC5_thenAssertTrue() {
@@ -99,4 +190,22 @@ public class DecideTest {
         boolean LIC5False = decide.LIC5();
         assertFalse(LIC5False);
     }
+
+    // LIC6
+
+    // LIC7
+
+    // LIC8
+
+    // LIC9
+
+    // LIC10
+
+    // LIC11
+
+    // LIC12
+
+    // LIC13
+
+    // LIC14
 }
