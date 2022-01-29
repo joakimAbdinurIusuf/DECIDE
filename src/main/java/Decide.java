@@ -121,18 +121,17 @@ public class Decide {
 
     // If (0, y<0) or (x<0, y<0) then the data point is in quadrant 3.
     private boolean dataPointIsInThirdQuadrant(int i, int j) {
-        return (points[i + j][0] == 0 && points[i + j][1] < 0) || (points[i + j][0] < 0 && points[i + j][1] < 0);
+        return points[i + j][0] <= 0 && points[i + j][1] < 0;
     }
 
     // If (x<0, 0) or (x<0, y>0) then the data point is in quadrant 2.
     private boolean dataPointIsInSecondQuadrant(int i, int j) {
-        return (points[i + j][0] < 0 && points[i + j][1] == 0) || (points[i + j][0] < 0 && points[i + j][1] > 0);
+        return points[i + j][0] < 0 && points[i + j][1] >= 0;
     }
 
     // If (0, 0) or (x>0, 0) or (0, y>0) or (x>0, y>0) then the data point is in quadrant 1.
     private boolean dataPointIsInFirstQuadrant(int i, int j) {
-        return (points[i + j][0] == 0 && points[i + j][1] == 0) || (points[i + j][0] > 0 && points[i + j][1] == 0)
-                || (points[i + j][0] == 0 && points[i + j][1] > 0) || (points[i + j][0] > 0 && points[i + j][1] > 0);
+        return points[i + j][0] >= 0 && points[i + j][1] >= 0;
     }
 
     private void throwExceptionsLIC4() throws IllegalParameterObjectException {
