@@ -184,7 +184,7 @@ public class Decide {
         int lastPIndex;
         double distance;
 
-        for (int i = 0; i < numpoints-(N_PTS-1); i++) {
+        for (int i = 0; i < numpoints-N_PTS+1; i++) {
             firstP = points[i];
             lastPIndex = i+N_PTS-1;
             lastP = points[lastPIndex];
