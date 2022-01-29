@@ -168,13 +168,13 @@ public class Decide {
      * a data point to the line joining the first and last point is greater than DIST, false
      * otherwise.
      */
-    public boolean LIC6() throws IllegalArgumentException {
+    public boolean LIC6() throws IllegalParameterObjectException {
         if (parameters.getDIST() < 0) {
-            throw new IllegalArgumentException("DIST cannot be negative.");
+            throw new IllegalParameterObjectException("DIST cannot be negative.");
         } else if (parameters.getN_PTS() < 3) {
-            throw new IllegalArgumentException("N_PTS cannot be smaller than 3.");
+            throw new IllegalParameterObjectException("N_PTS cannot be smaller than 3.");
         } else if (parameters.getN_PTS() > numpoints) {
-            throw new IllegalArgumentException("N_PTS cannot be larger than number of data points.");
+            throw new IllegalParameterObjectException("N_PTS cannot be larger than number of data points.");
         } else if (numpoints < 3) {
             return false;
         }
