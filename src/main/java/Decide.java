@@ -33,9 +33,7 @@ public class Decide {
             throw new IllegalParameterObjectException("LENGTH1 cannot be negative.");
         }
 
-        double xDifference;
-        double yDifference;
-        double distance;
+        double xDifference, yDifference, distance;
 
         for (int i = 0; i < numpoints - 1; i++) {
             xDifference = Math.abs(points[i + 1][0] - points[i][0]);
@@ -62,10 +60,7 @@ public class Decide {
             throw new IllegalParameterObjectException("AREA1 cannot be negative.");
         }
 
-        double triangleArea;
-        double firstTerm;
-        double secondTerm;
-        double thirdTerm;
+        double firstTerm, secondTerm, thirdTerm, triangleArea;
 
         for (int i = 0; i < numpoints-2; i++){
             firstTerm = points[i][0] * (points[i+1][1] - points[i+2][1]);
@@ -187,13 +182,9 @@ public class Decide {
         }
 
         int N_PTS = parameters.getN_PTS();
-        double[] firstP;
-        double[] lastP;
+        double[] firstP, lastP, currentP;
         int lastPIndex;
-        double[] currentP;
-        double numerator;
-        double denominator;
-        double distance;
+        double numerator, denominator, distance;
 
         for (int i = 0; i < numpoints-(N_PTS-1); i++) {
             firstP = points[i];
