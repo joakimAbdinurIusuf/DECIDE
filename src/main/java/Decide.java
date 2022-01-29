@@ -163,8 +163,6 @@ public class Decide {
 
     /**
      * Check if LIC6 is true.
-     * Uses formula for calculating distance between a line (given in two points firstP and lastP)
-     * and another point currentP.
      *
      * @return true if there exists a set of N_PTS consecutive points where the distance between
      * a data point to the line joining the first and last point is greater than DIST, false
@@ -195,11 +193,9 @@ public class Decide {
                 currentP = points[j];
 
                 if ((Double.compare(firstP[0],lastP[0])==0) & (Double.compare(firstP[1],lastP[1])==0)) {
-                    distance = distanceBetween2Points(firstP,currentP);
+                    distance = distanceBetween2Points(firstP, currentP);
                 } else {
-                    numerator = Math.abs((lastP[0] - firstP[0]) * (firstP[1] - currentP[1]) - (firstP[0] - currentP[0]) * (lastP[1] - firstP[1]));
-                    denominator = Math.sqrt(Math.pow(lastP[0] - firstP[0], 2) + Math.pow(lastP[1] - firstP[1], 2));
-                    distance = numerator / denominator;
+                    distance = distanceBetweenLineAndPoint(firstP, lastP, currentP);
                 }
 
                 if (Double.compare(distance, parameters.getDIST()) > 0) {
@@ -211,11 +207,20 @@ public class Decide {
         return false;
     }
 
+
     public double distanceBetween2Points(double[] point1, double[] point2) {
         double xDifference = Math.abs(point2[0] - point1[0]);
         double yDifference = Math.abs(point2[1] - point1[1]);
 
         return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+    }
+
+    public double distanceBetweenLineAndPoint(double[] linePoint1, double[] linePoint2, double[] point) {
+        double numerator = Math.abs((linePoint2[0] - linePoint1[0]) * (linePoint1[1] - point[1]) - (linePoint1[0] - point[0]) * (linePoint2[1] - linePoint1[1]));
+        double denominator = Math.sqrt(Math.pow(linePoint2[0] - linePoint1[0], 2) + Math.pow(linePoint2[1] - linePoint1[1], 2));
+        double distance = numerator / denominator;
+
+        return distance;
     }
 
      /* Check if LIC7 is true.
