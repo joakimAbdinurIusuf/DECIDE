@@ -28,9 +28,9 @@ public class Decide {
      * @return true if there exists two consecutive data points with a distance greater than LENGTH1,
      * false otherwise.
      */
-    public boolean LIC0() throws IllegalArgumentException {
+    public boolean LIC0() throws IllegalParameterObjectException {
         if (parameters.getLENGTH1() < 0) {
-            throw new IllegalArgumentException("LENGTH1 cannot be negative.");
+            throw new IllegalParameterObjectException("LENGTH1 cannot be negative.");
         }
 
         double xDifference;
@@ -57,9 +57,9 @@ public class Decide {
      * @return true if any three consecutive points forms a triangle with larger area than AREA1, false
      * otherwise
      */
-    public boolean LIC3() throws IllegalArgumentException {
+    public boolean LIC3() throws IllegalParameterObjectException {
         if (parameters.getAREA1() < 0) {
-            throw new IllegalArgumentException("AREA1 cannot be negative.");
+            throw new IllegalParameterObjectException("AREA1 cannot be negative.");
         }
 
         double triangleArea;
@@ -82,6 +82,74 @@ public class Decide {
     }
 
     /**
+     * Check if LIC4 is true.
+     *
+     * @return true if there exists at least one set of Q_PTS consecutive data points
+     * that lie in more than QUADS quadrants, false otherwise.
+     */
+    public boolean LIC4() throws IllegalParameterObjectException {
+        throwExceptionsLIC4();
+
+        for (int i = 0; i <= numpoints - parameters.getQ_PTS(); i++) {
+            int isInFirstQuad = 0, isInSecondQuad = 0, isInThirdQuad = 0, isInFourthQuad = 0;
+            int numOfQuadrantsThatContainPoint = 0;
+
+            for (int j = 0; j < parameters.getQ_PTS(); j++) {
+                if (dataPointIsInFirstQuadrant(i, j)) {
+                    isInFirstQuad = 1;
+                } else if (dataPointIsInSecondQuadrant(i, j)) {
+                    isInSecondQuad = 1;
+                } else if (dataPointIsInThirdQuadrant(i, j)) {
+                    isInThirdQuad = 1;
+                } else if (dataPointIsInFourthQuadrant(i, j)) {
+                    isInFourthQuad = 1;
+                }
+            }
+            numOfQuadrantsThatContainPoint = isInFirstQuad + isInSecondQuad + isInThirdQuad + isInFourthQuad;
+
+            if (numOfQuadrantsThatContainPoint > parameters.getQUADS()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // If (x>0, y<0) then the data point is in quadrant 4.
+    private boolean dataPointIsInFourthQuadrant(int i, int j) {
+        return points[i + j][0] > 0 && points[i + j][1] < 0;
+    }
+
+    // If (0, y<0) or (x<0, y<0) then the data point is in quadrant 3.
+    private boolean dataPointIsInThirdQuadrant(int i, int j) {
+        return points[i + j][0] <= 0 && points[i + j][1] < 0;
+    }
+
+    // If (x<0, 0) or (x<0, y>0) then the data point is in quadrant 2.
+    private boolean dataPointIsInSecondQuadrant(int i, int j) {
+        return points[i + j][0] < 0 && points[i + j][1] >= 0;
+    }
+
+    // If (0, 0) or (x>0, 0) or (0, y>0) or (x>0, y>0) then the data point is in quadrant 1.
+    private boolean dataPointIsInFirstQuadrant(int i, int j) {
+        return points[i + j][0] >= 0 && points[i + j][1] >= 0;
+    }
+
+    private void throwExceptionsLIC4() throws IllegalParameterObjectException {
+        if (parameters.getQ_PTS() < 2) {
+            throw new IllegalParameterObjectException("Q_PTS must be greater than or equal to 2.");
+        }
+        if (parameters.getQ_PTS() > numpoints) {
+            throw new IllegalParameterObjectException("Q_PTS must be less than than or equal to numpoints.");
+        }
+        if (parameters.getQUADS() < 1) {
+            throw new IllegalParameterObjectException("QUADS must be greater than or equal to 1.");
+        }
+        if (parameters.getQUADS() > 3) {
+            throw new IllegalParameterObjectException("QUADS must be less than than or equal to 3.");
+        }
+    }
+
+    /**
      * Check if LIC5 is true.
      *
      * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
@@ -89,12 +157,21 @@ public class Decide {
     public boolean LIC5() {
         double xDifference;
 
-        for(int i = 0; i < numpoints - 1; i++) {
+        for (int i = 0; i < numpoints - 1; i++) {
             xDifference = points[i + 1][0] - points[i][0];
             if (xDifference < 0) {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * Check if LIC7 is true.
+     *
+     * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
+     */
+    public boolean LIC7() {
         return false;
     }
 
@@ -108,5 +185,4 @@ public class Decide {
         }
         return PUM;
     }
-
 }
