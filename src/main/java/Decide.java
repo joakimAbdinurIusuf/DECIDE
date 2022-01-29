@@ -167,7 +167,6 @@ public class Decide {
     }
 
     /**
-<<<<<<< HEAD
      * Check if LIC6 is true.
      * Uses formula for calculating distance between a line (given in two points firstP and lastP)
      * and another point currentP.
@@ -195,8 +194,6 @@ public class Decide {
         double numerator;
         double denominator;
         double distance;
-        double xDifference;
-        double yDifference;
 
         for (int i = 0; i < numpoints-(N_PTS-1); i++) {
             firstP = points[i];
@@ -218,7 +215,7 @@ public class Decide {
                     return true;
                 }
             }
-            }
+        }
 
         return false;
     }
