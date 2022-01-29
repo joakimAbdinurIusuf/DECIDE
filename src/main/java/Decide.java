@@ -182,7 +182,7 @@ public class Decide {
         int N_PTS = parameters.getN_PTS();
         double[] firstP, lastP, currentP;
         int lastPIndex;
-        double numerator, denominator, distance;
+        double distance;
 
         for (int i = 0; i < numpoints-(N_PTS-1); i++) {
             firstP = points[i];
