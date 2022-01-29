@@ -271,8 +271,14 @@ public class DecideTest {
         assertFalse(LIC5False);
     }
 
+    // LIC6
+
+    /**
+     * Check that LIC6 returns true if there exists a point with a distance greater than DIST to the line
+     * joining the first and last points in a set of N_PTS consecutive data points.
+     */
     @Test
-    public void givenDistanceBetweenPointAndLineGreaterThanDISTInSetOfNPTSConsecutivePoints_whenLIC6_thenAssertTrue() {
+    public void LIC6PositiveCase() {
         double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -281,18 +287,12 @@ public class DecideTest {
         assertTrue(LIC6True);
     }
 
+    /**
+     * Check that LIC6 returns true if there exists a point with a distance greater than DIST to two
+     * coinciding first and last points in a set of N_PTS consecutive data points.
+     */
     @Test
-    public void givenDoesNotExistDistanceBetweenPointAndLineGreaterThanDISTInSetOfNPTSConsecutivePoints_whenLIC6_thenAssertFalse() {
-        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
-        int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 10, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC6False = decide.LIC6();
-        assertFalse(LIC6False);
-    }
-
-    @Test
-    public void givenDistanceBetweenPointAndCoincidingPointsGreaterThanDISTInSetOfNPTSConsecutivePoints_whenLIC6_thenAssertTrue() {
+    public void LIC6PositiveCase2() {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {2.0, 2.0}, {0.0, 0.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -301,8 +301,25 @@ public class DecideTest {
         assertTrue(LIC6True);
     }
 
+    /**
+     * Check that LIC6 returns false if there does not exist any point with a distance greater than DIST to the line
+     * joining the first and last points in any set of N_PTS consecutive data points.
+     */
     @Test
-    public void givenDISTIsLessThanZero_whenLIC6_thenExceptionIsThrownAndMessagePrinted() {
+    public void LIC6NegativeCase() {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 10, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC6False = decide.LIC6();
+        assertFalse(LIC6False);
+    }
+
+    /**
+     * Test if LIC6 throws exception when DIST < 0.
+     */
+    @Test
+    public void LIC6Exception1() {
         double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
 
         int numpoints = points.length;
@@ -314,6 +331,48 @@ public class DecideTest {
         });
 
         String expectedMessage = "DIST cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC6 throws exception when N_PTS < 3.
+     */
+    @Test
+    public void LIC6Exception2() {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC6();
+        });
+
+        String expectedMessage = "N_PTS cannot be smaller than 3.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC6 throws exception when N_PTS < NUMPOINTS.
+     */
+    @Test
+    public void LIC6Exception3() {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            decide.LIC6();
+        });
+
+        String expectedMessage = "N_PTS cannot be larger than number of data points.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
