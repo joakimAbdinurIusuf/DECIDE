@@ -207,7 +207,6 @@ public class Decide {
         return false;
     }
 
-
     public double distanceBetween2Points(double[] point1, double[] point2) {
         double xDifference = Math.abs(point2[0] - point1[0]);
         double yDifference = Math.abs(point2[1] - point1[1]);
@@ -215,6 +214,15 @@ public class Decide {
         return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
     }
 
+    /**
+     Calculates distance between line and point given two points on the line
+     *
+     * @param linePoint1 one of the points on the line L
+     * @param linePoint2 the other point on line L
+     * @param point the point p
+     *
+     * @return the distance between line L and point p
+     */
     public double distanceBetweenLineAndPoint(double[] linePoint1, double[] linePoint2, double[] point) {
         double numerator = Math.abs((linePoint2[0] - linePoint1[0]) * (linePoint1[1] - point[1]) - (linePoint1[0] - point[0]) * (linePoint2[1] - linePoint1[1]));
         double denominator = Math.sqrt(Math.pow(linePoint2[0] - linePoint1[0], 2) + Math.pow(linePoint2[1] - linePoint1[1], 2));
