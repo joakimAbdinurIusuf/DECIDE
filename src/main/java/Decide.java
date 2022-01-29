@@ -51,8 +51,6 @@ public class Decide {
 
     /**
      * Check if LIC3 is true.
-     * Calculates the area of every triangle given by three consecutive data points. The area is calculated
-     * with the area formula |Ax(By-Cy)+Bx(Cy-Ay)+Cx(Ay-By)/2| for the three consecutive points A, B, and C.
      *
      * @return true if any three consecutive points forms a triangle with larger area than AREA1, false
      * otherwise
@@ -173,6 +171,18 @@ public class Decide {
      */
     public boolean LIC7() {
         return false;
+    }
+
+    /**
+     * Calculates the area of a triangle with the area formula:
+     * |Ax(By-Cy)+Bx(Cy-Ay)+Cx(Ay-By)/2| for the three points A, B, and C.
+     */
+    public double triangleArea(double[] point1, double[] point2, double[]point3) {
+        double firstTerm = point1[0] * (point2[1] - point3[1]);
+        double secondTerm = point2[0] * (point3[1] - point1[1]);
+        double thirdTerm = point3[0] * (point1[1] - point2[1]);
+
+        return Math.abs(firstTerm + secondTerm + thirdTerm) / 2;
     }
 
     public boolean[][] PUM(boolean[] CMV) {
