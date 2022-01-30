@@ -476,6 +476,57 @@ public class DecideTest {
     // LIC14
 
     /**
+     * Check that LIC14 returns true if there exist two sets of three points, separated by exactly E_PTS
+     * and F_PTS consecutive intervening points, with areas greater than AREA1 and AREA2, respectively.
+     */
+    @Test
+    public void LIC14PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-100, -100}, {0.0, 10.0}, {-2.0, 0.0}, {10.0, 0.0}, {0.0, -2.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 5);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC14True = decide.LIC14();
+        assertTrue(LIC14True);
+    }
+
+    /**
+     * Check that LIC14 returns false if there does not exist any set of three points, separated by exactly E_PTS
+     * and F_PTS consecutive intervening points, with area greater than AREA1.
+     */
+    @Test
+    public void LIC14NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-100, -100}, {0.0, 10.0}, {-2.0, 0.0}, {10.0, 0.0}, {0.0, -2.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 5);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC14False = decide.LIC14();
+        assertFalse(LIC14False);
+    }
+
+    /**
+     * Test if LIC14 throws exception when AREA2 < 0.
+     */
+    @Test
+    public void LIC14Exception1() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC14();
+        });
+
+        String expectedMessage = "AREA2 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
+
+    /**
      * Tests so that given a CMV the PUM function outputs the correct PUM vector.
      */
     @Test

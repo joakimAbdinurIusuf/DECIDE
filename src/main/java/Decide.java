@@ -49,8 +49,6 @@ public class Decide {
 
     /**
      * Check if LIC3 is true.
-     * Calculates the area of every triangle given by three consecutive data points. The area is calculated
-     * with the area formula |Ax(By-Cy)+Bx(Cy-Ay)+Cx(Ay-By)/2| for the three consecutive points A, B, and C.
      *
      * @return true if any three consecutive points forms a triangle with larger area than AREA1, false
      * otherwise
@@ -261,6 +259,56 @@ public class Decide {
         } else if (parameters.getK_PTS() > numpoints - 2) {
             throw new IllegalParameterObjectException("K_PTS must be less than or equal to numpoints - 2.");
         }
+      
+    /**
+     * Check if LIC14 is true.
+     *
+     * @return true if there exists at least one or two sets of three data points, separated by E_PTS and
+     * F_PTS consecutive intervening points, so that they are the vertices of a triangle with area greater
+     * than AREA1 or less than AREA2 (or both at the same time), false otherwise.
+     *
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC14() throws IllegalParameterObjectException{
+        if (parameters.getAREA2() < 0) {
+            throw new IllegalParameterObjectException("AREA2 cannot be negative.");
+        } else if (numpoints < 5) {
+            return false;
+        }
+
+        int E_PTS = parameters.getE_PTS();
+        int F_PTS = parameters.getF_PTS();
+        int lastIndex = numpoints - E_PTS - F_PTS - 2;
+        boolean isLargerThanAREA1 = false;
+        boolean isLessThanAREA2 = false;
+
+        for (int i = 0; i < lastIndex; i++) {
+            double triangleArea = triangleArea(points[i], points[i+E_PTS+1], points[i+E_PTS+F_PTS+2]);
+
+            if (Double.compare(triangleArea, parameters.getAREA1()) > 0) {
+                isLargerThanAREA1 = true;
+            }
+            if (Double.compare(triangleArea, parameters.getAREA2()) < 0) {
+                isLessThanAREA2 = true;
+            }
+            if (isLargerThanAREA1 && isLessThanAREA2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Calculates the area of a triangle with the area formula:
+     * |Ax(By-Cy)+Bx(Cy-Ay)+Cx(Ay-By)/2| for the three points A, B, and C.
+     */
+    public double triangleArea(double[] point1, double[] point2, double[]point3) {
+        double firstTerm = point1[0] * (point2[1] - point3[1]);
+        double secondTerm = point2[0] * (point3[1] - point1[1]);
+        double thirdTerm = point3[0] * (point1[1] - point2[1]);
+
+        return Math.abs(firstTerm + secondTerm + thirdTerm) / 2;
     }
 
     public boolean[][] PUM(boolean[] CMV) {
@@ -273,5 +321,4 @@ public class Decide {
         }
         return PUM;
     }
-
 }
