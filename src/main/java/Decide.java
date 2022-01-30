@@ -205,13 +205,6 @@ public class Decide {
         return false;
     }
 
-    public double distanceBetween2Points(double[] point1, double[] point2) {
-        double xDifference = Math.abs(point2[0] - point1[0]);
-        double yDifference = Math.abs(point2[1] - point1[1]);
-
-        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
-    }
-
     /**
      Calculates distance between line and point given two points on the line
      *
@@ -252,6 +245,21 @@ public class Decide {
             }
         }
         return false;
+    }
+
+    private void throwExceptionsLIC7() throws IllegalParameterObjectException {
+        if (parameters.getK_PTS() < 1) {
+            throw new IllegalParameterObjectException("K_PTS must be greater or equal to 1.");
+        } else if (parameters.getK_PTS() > numpoints - 2) {
+            throw new IllegalParameterObjectException("K_PTS must be less than or equal to numpoints - 2.");
+        }
+    }
+
+    public double distanceBetween2Points(double[] point1, double[] point2) {
+        double xDifference = Math.abs(point2[0] - point1[0]);
+        double yDifference = Math.abs(point2[1] - point1[1]);
+
+        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
     }
 
     /**
