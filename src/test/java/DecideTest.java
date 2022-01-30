@@ -397,9 +397,9 @@ public class DecideTest {
      */
     @Test
     public void LIC12PositiveCase1() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {2.0, 2.0}, {0.0, 0.0}};
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {20.0, 0.0}, {0.0, -5.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(15, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC12True = decide.LIC12();
         assertTrue(LIC12True);
@@ -414,7 +414,7 @@ public class DecideTest {
     public void LIC12PositiveCase2() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 10, 0);
+        Parameters parameters = new Parameters(1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC12True = decide.LIC12();
         assertTrue(LIC12True);
@@ -428,10 +428,10 @@ public class DecideTest {
     public void LIC12NegativeCase() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}, {0.1, 0.5}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 100, 10, 0);
+        Parameters parameters = new Parameters(100, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC12False = decide.LIC12();
-        assertTrue(LIC12False);
+        assertFalse(LIC12False);
     }
 
     /**
@@ -449,7 +449,7 @@ public class DecideTest {
             decide.LIC12();
         });
 
-        String expectedMessage = "AREA2 cannot be negative.";
+        String expectedMessage = "LENGTH2 cannot be negative.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
