@@ -278,7 +278,7 @@ public class DecideTest {
      * joining the first and last points in a set of N_PTS consecutive data points.
      */
     @Test
-    public void LIC6PositiveCase() {
+    public void LIC6PositiveCase()  throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -292,7 +292,7 @@ public class DecideTest {
      * coinciding first and last points in a set of N_PTS consecutive data points.
      */
     @Test
-    public void LIC6PositiveCase2() {
+    public void LIC6PositiveCase2() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {2.0, 2.0}, {0.0, 0.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -306,7 +306,7 @@ public class DecideTest {
      * joining the first and last points in any set of N_PTS consecutive data points.
      */
     @Test
-    public void LIC6NegativeCase() {
+    public void LIC6NegativeCase() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 10, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
