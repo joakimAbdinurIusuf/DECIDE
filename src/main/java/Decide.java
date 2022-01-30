@@ -192,7 +192,7 @@ public class Decide {
             for (int j = i + 1; j < lastPIndex; j++) {
                 currentP = points[j];
 
-                if ((Double.compare(firstP[0],lastP[0])==0) & (Double.compare(firstP[1],lastP[1])==0)) {
+                if ((Double.compare(firstP[0], lastP[0]) == 0) && (Double.compare(firstP[1], lastP[1]) == 0)) {
                     distance = distanceBetween2Points(firstP, currentP);
                 } else {
                     distance = distanceBetweenLineAndPoint(firstP, lastP, currentP);
