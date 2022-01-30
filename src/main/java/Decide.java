@@ -231,12 +231,26 @@ public class Decide {
         return distance;
     }
 
-     /* Check if LIC7 is true.
+    /** Check if LIC7 is true.
      *
      * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
      */
-    public boolean LIC7() {
+    public boolean LIC7() throws IllegalParameterObjectException {
+        if (numpoints < 3) {
+            return false;
+        }
+        throwExceptionsLIC7();
+
+
         return false;
+    }
+
+    private void throwExceptionsLIC7() throws IllegalParameterObjectException {
+        if (parameters.getK_PTS() < 1) {
+            throw new IllegalParameterObjectException("K_PTS must be greater or equal to 1.");
+        } else if (parameters.getK_PTS() > numpoints - 2) {
+            throw new IllegalParameterObjectException("K_PTS must be less than or equal to numpoints - 2.");
+        }
     }
 
     public boolean[][] PUM(boolean[] CMV) {
