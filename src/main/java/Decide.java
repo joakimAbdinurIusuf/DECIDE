@@ -229,11 +229,28 @@ public class Decide {
         return distance;
     }
 
-     /* Check if LIC7 is true.
+    /** Check if LIC7 is true.
      *
-     * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
+     * @return true if there exists one set of two data points separated by exactly
+     * K PTS consecutive intervening points that are a distance greater than the length, false otherwise.
      */
-    public boolean LIC7() {
+    public boolean LIC7() throws IllegalParameterObjectException {
+        if (numpoints < 3) {
+            return false;
+        }
+        throwExceptionsLIC7();
+
+        int K_PTS = parameters.getK_PTS();
+        double[] firstPoint, secondPoint;
+        double LENGTH1 = parameters.getLENGTH1();
+
+        for (int i = 0; i < numpoints - K_PTS - 1; i++) {
+            firstPoint = points[i];
+            secondPoint = points[i + K_PTS + 1];
+            if (distanceBetween2Points(firstPoint, secondPoint) > LENGTH1) {
+                return true;
+            }
+        }
         return false;
     }
 
