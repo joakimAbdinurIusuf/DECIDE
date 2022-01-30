@@ -473,6 +473,51 @@ public class DecideTest {
 
     // LIC13
 
+    /**
+     * Check that LIC13 returns true if there exists at least one set of three data points, separated by A_PTS and
+     * B_PTS consecutive intervening points, so that they cannot be contained within a circle of
+     * RADIUS1 and another (or the same set) that can be contained in a circle of RADIUS2.
+     */
+    @Test
+    public void LIC13PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 5.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13True = decide.LIC13();
+        assertTrue(LIC13True);
+    }
+
+    /**
+     * Check that LIC13 returns false if there does not exist at least one set of three data points,
+     * separated by A_PTS and B_PTS consecutive intervening points, so that they cannot be contained
+     * within a circle of RADIUS1.
+     */
+    @Test
+    public void LIC13NegativeCaseRadius1() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 5.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13True = decide.LIC13();
+        assertTrue(LIC13True);
+    }
+
+    /**
+     * Check that LIC13 returns false if there does not exist at least one set of three data points,
+     * separated by A_PTS and B_PTS consecutive intervening points, so that they can be contained
+     * in a circle of RADIUS2.
+     */
+    @Test
+    public void LIC13NegativeCaseRadius2() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 5.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13True = decide.LIC13();
+        assertTrue(LIC13True);
+    }
+
     // LIC14
 
     /**
@@ -523,8 +568,6 @@ public class DecideTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
-
 
     /**
      * Tests so that given a CMV the PUM function outputs the correct PUM vector.
