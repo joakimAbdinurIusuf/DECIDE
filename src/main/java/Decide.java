@@ -265,6 +265,29 @@ public class Decide {
      * @throws IllegalParameterObjectException
      */
     public boolean LIC13() throws IllegalParameterObjectException {
+        if (parameters.getRADIUS1() < 0 || parameters.getRADIUS2() < 0) {
+            throw new IllegalParameterObjectException("The radius cannot be less than 0.");
+        } else if (numpoints < 5) {
+            return false;
+        }
+
+        int A_PTS = parameters.getA_PTS();
+        int B_PTS = parameters.getB_PTS();
+        double RADIUS_1 = parameters.getRADIUS1();
+        double RADIUS_2 = parameters.getRADIUS2();
+        double distanceBetweenFirstAndSecondPoint, distanceBetweenFirstAndThirdPoint, distanceBetweenSecondAndThirdPoint;
+
+        for (int i = 0; i < numpoints - A_PTS - B_PTS - 2; i++) {
+            distanceBetweenFirstAndSecondPoint = distanceBetween2Points(points[i], points[i + A_PTS + 1]);
+            distanceBetweenFirstAndThirdPoint = distanceBetween2Points(points[i], points[i + A_PTS + B_PTS + 2]);
+            distanceBetweenSecondAndThirdPoint= distanceBetween2Points(points[i + A_PTS + 1], points[i + A_PTS + B_PTS + 2]);
+            double maxDistance = Math.max(Math.max(distanceBetweenFirstAndSecondPoint, distanceBetweenFirstAndThirdPoint), distanceBetweenSecondAndThirdPoint);
+
+            // Cannot be contained if maxDistance > diameter, and can be contained if maxDistance <= diameter.
+            if (maxDistance > 2*RADIUS_1 && maxDistance <= 2*RADIUS_2) {
+                return true;
+            }
+        }
         return false;
     }
 
