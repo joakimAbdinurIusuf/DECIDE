@@ -321,14 +321,14 @@ public class DecideTest {
      * Test if LIC14 throws exception when AREA2 < 0.
      */
     @Test
-    public void LIC6Exception1() throws IllegalParameterObjectException {
+    public void LIC14Exception1() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
 
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             decide.LIC14();
         });
 
