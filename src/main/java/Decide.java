@@ -255,6 +255,19 @@ public class Decide {
         }
     }
 
+    /**
+     * Check if LIC14 is true.
+     *
+     * @return true if there exists at least one or two sets of three data points, separated by E_PTS and
+     * F_PTS consecutive intervening points, so that they are the vertices of a triangle with area greater
+     * than AREA1 or less than AREA2 (or both at the same time), false otherwise.
+     *
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC13() throws IllegalParameterObjectException {
+        return false;
+    }
+
     public double distanceBetween2Points(double[] point1, double[] point2) {
         double xDifference = Math.abs(point2[0] - point1[0]);
         double yDifference = Math.abs(point2[1] - point1[1]);
@@ -271,7 +284,7 @@ public class Decide {
      *
      * @throws IllegalParameterObjectException
      */
-    public boolean LIC14() throws IllegalParameterObjectException{
+    public boolean LIC14() throws IllegalParameterObjectException {
         if (parameters.getAREA2() < 0) {
             throw new IllegalParameterObjectException("AREA2 cannot be negative.");
         } else if (numpoints < 5) {
