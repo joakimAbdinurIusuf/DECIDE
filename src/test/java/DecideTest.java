@@ -482,7 +482,7 @@ public class DecideTest {
     public void LIC13PositiveCase() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 5.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0);
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 5, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC13True = decide.LIC13();
         assertTrue(LIC13True);
@@ -497,7 +497,7 @@ public class DecideTest {
     public void LIC13NegativeCaseRadius1() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 5.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0);
+        Parameters parameters = new Parameters(0, 10, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 5, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC13True = decide.LIC13();
         assertTrue(LIC13True);
@@ -512,7 +512,7 @@ public class DecideTest {
     public void LIC13NegativeCaseRadius2() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 5.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC13True = decide.LIC13();
         assertTrue(LIC13True);
