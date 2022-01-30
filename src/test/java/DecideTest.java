@@ -380,6 +380,87 @@ public class DecideTest {
 
     // LIC7
 
+    /**
+     * Test if LIC7 returns true when there exists one set of two data points separated by exactly
+     * K PTS consecutive intervening points that are a distance greater than the length
+     */
+    @Test
+    public void LIC7PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC7True = decide.LIC7();
+        assertTrue(LIC7True);
+    }
+
+    /**
+     * Test if LIC7 returns false when numpoints < 3
+     */
+    @Test
+    public void LIC7NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC7False = decide.LIC7();
+        assertFalse(LIC7False);
+    }
+
+    /**
+     * Test if LIC7 returns false when there does not exist one set of two data points separated by exactly
+     * K PTS consecutive intervening points that are a distance greater than the length
+     */
+    @Test
+    public void LIC7NegativeCase2() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC7False = decide.LIC7();
+        assertFalse(LIC7False);
+    }
+
+    /**
+     * Test if LIC7 throws exception when K_PTS < 1.
+     */
+    @Test
+    public void LIC7Exception1() {
+        double[][] points = new double[][]{{1.0, 1.0}, {1.0, 1.0}, {100.0, 100.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC7();
+        });
+
+        String expectedMessage = "K_PTS must be greater or equal to 1.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC7 throws exception when K_PTS > numpoints - 2.
+     */
+    @Test
+    public void LIC7Exception2() {
+        double[][] points = new double[][]{{1.0, 1.0}, {1.0, 1.0}, {100.0, 100.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, numpoints, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC7();
+        });
+
+        String expectedMessage = "K_PTS must be less than or equal to numpoints - 2.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
     // LIC8
 
     // LIC9
