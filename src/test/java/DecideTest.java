@@ -326,7 +326,7 @@ public class DecideTest {
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, -1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             decide.LIC6();
         });
 
@@ -347,7 +347,7 @@ public class DecideTest {
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             decide.LIC6();
         });
 
@@ -368,7 +368,7 @@ public class DecideTest {
         Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 1, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             decide.LIC6();
         });
 
