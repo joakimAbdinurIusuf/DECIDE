@@ -174,6 +174,45 @@ public class Decide {
     }
 
     /**
+     * Check if LIC14 is true.
+     *
+     * @return true if there exists at least one or two sets of three data points, separated by E_PTS and
+     * F_PTS consecutive intervening points, so that they are the vertices of a triangle with area greater
+     * than AREA1 or less than AREA2 (or both at the same time), false otherwise.
+     *
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC14() throws IllegalParameterObjectException{
+        if (parameters.getAREA2() < 0) {
+            throw new IllegalParameterObjectException("AREA2 cannot be negative.");
+        } else if (numpoints < 5) {
+            return false;
+        }
+
+        int E_PTS = parameters.getE_PTS();
+        int F_PTS = parameters.getF_PTS();
+        int lastIndex = numpoints - E_PTS - F_PTS - 2;
+        boolean isLargerThanAREA1 = false;
+        boolean isLessThanAREA2 = false;
+
+        for (int i = 0; i < lastIndex; i++) {
+            double triangleArea = triangleArea(points[i], points[i+E_PTS+1], points[i+E_PTS+F_PTS+2]);
+
+            if (Double.compare(triangleArea, parameters.getAREA1()) > 0) {
+                isLargerThanAREA1 = true;
+            }
+            if (Double.compare(triangleArea, parameters.getAREA2()) < 0) {
+                isLessThanAREA2 = true;
+            }
+            if (isLargerThanAREA1 && isLessThanAREA2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Calculates the area of a triangle with the area formula:
      * |Ax(By-Cy)+Bx(Cy-Ay)+Cx(Ay-By)/2| for the three points A, B, and C.
      */
