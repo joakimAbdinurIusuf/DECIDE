@@ -499,8 +499,8 @@ public class DecideTest {
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 10, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 5, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC13True = decide.LIC13();
-        assertTrue(LIC13True);
+        boolean LIC13False = decide.LIC13();
+        assertFalse(LIC13False);
     }
 
     /**
@@ -514,8 +514,61 @@ public class DecideTest {
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
-        boolean LIC13True = decide.LIC13();
-        assertTrue(LIC13True);
+        boolean LIC13False = decide.LIC13();
+        assertFalse(LIC13False);
+    }
+
+    /**
+     * Check that LIC13 returns false when numpoints < 5.
+     */
+    @Test
+    public void LIC13NegativeCaseNumpoints() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13False = decide.LIC13();
+        assertFalse(LIC13False);
+    }
+
+    /**
+     * Test if LIC13 throws exception when RADIUS1 < 0.
+     */
+    @Test
+    public void LIC13Exception1() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, -1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC13();
+        });
+
+        String expectedMessage = "The radius cannot be less than 0.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC13 throws exception when RADIUS2 < 0.
+     */
+    @Test
+    public void LIC13Exception2() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC13();
+        });
+
+        String expectedMessage = "The radius cannot be less than 0.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     // LIC14
