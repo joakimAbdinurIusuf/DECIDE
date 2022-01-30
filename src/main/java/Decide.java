@@ -256,11 +256,11 @@ public class Decide {
     }
 
     /**
-     * Check if LIC14 is true.
+     * Check if LIC13 is true.
      *
-     * @return true if there exists at least one or two sets of three data points, separated by E_PTS and
-     * F_PTS consecutive intervening points, so that they are the vertices of a triangle with area greater
-     * than AREA1 or less than AREA2 (or both at the same time), false otherwise.
+     * @return true if there exists at least one set of three data points, separated by A_PTS and
+     * B_PTS consecutive intervening points, so that they cannot be contained within a circle of
+     * RADIUS1 and another (or the same set) that can be contained in a circle of RADIUS2, false otherwise.
      *
      * @throws IllegalParameterObjectException
      */
