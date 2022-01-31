@@ -3,12 +3,14 @@ public class Decide {
     private double[][] points;
     private int numpoints;
     private LCM lcm;
+    private boolean[] puv;
 
     public Decide(int numpoints, double[][] points, Parameters parameters, LCM lcm, boolean[] puv) {
         this.numpoints = numpoints;
         this.points = points;
         this.parameters = parameters;
         this.lcm = lcm;
+        this.puv = puv;
     }
 
     public void DECIDE() {
@@ -413,6 +415,7 @@ public class Decide {
         return Math.abs(firstTerm + secondTerm + thirdTerm) / 2;
     }
 
+    
     public boolean[][] PUM(boolean[] CMV) {
         boolean[][] PUM;
         PUM = new boolean[CMV.length][CMV.length];
@@ -422,6 +425,32 @@ public class Decide {
             }
         }
         return PUM;
+    }
+
+    /**
+     * Calculates the FUV vector. If PUV[i] is false, FUV[i] should be true.
+     * If PUV[i] is false and the i:th row in PUM is all true then FUV[i] should be true,
+     * otherwise false.
+     * @param PUM - Preliminary Unlocking Matrix 
+     * @return FUV
+    */
+    public boolean[] FUV(boolean[][] PUM) {
+        boolean[] FUV;
+        FUV = new boolean[PUM.length];
+        for (int i = 0; i < PUM.length; i++) {
+            if (!puv[i]) {
+                FUV[i] = true;
+                continue;
+            }
+            FUV[i] = true;
+            for (int j = 0; j < PUM[0].length; j++) {
+                if (!PUM[i][j]) {
+                    FUV[i] = false;
+                    break;
+                }
+            }   
+        }
+        return FUV;
     }
 
 }
