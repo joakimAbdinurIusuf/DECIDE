@@ -605,13 +605,78 @@ public class DecideTest {
 
     // LIC12
 
+    /**
+     * Check that LIC12 returns true if there exists two sets of two data points, separated by K_PTS
+     * consecutive intervening points, where the distance between the two points are greater than LENGTH1
+     * and less than LENGTH2 respectively.
+     */
+    @Test
+    public void LIC12PositiveCase1() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {20.0, 0.0}, {0.0, -5.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(15, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC12True = decide.LIC12();
+        assertTrue(LIC12True);
+    }
+
+    /**
+     * Check that LIC12 returns true if there exists one set of two data points, separated by K_PTS
+     * consecutive intervening points, where the distance between the two points are greater than LENGTH1
+     * and less than LENGTH2.
+     */
+    @Test
+    public void LIC12PositiveCase2() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC12True = decide.LIC12();
+        assertTrue(LIC12True);
+    }
+
+    /**
+     * Check that LIC12 returns false if there does not exist any set of two points, separated by K_PTS
+     * consecutive intervening points, where the distance between the two points is greater than LENGTH1.
+     */
+    @Test
+    public void LIC12NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {5.0, 0.0}, {0.1, 0.5}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(100, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC12False = decide.LIC12();
+        assertFalse(LIC12False);
+    }
+
+    /**
+     * Test if LIC12 throws exception when LENGTH2 < 0.
+     */
+    @Test
+    public void LIC12Exception() {
+        double[][] points = new double[][]{{0.0, 0.0}, {2.0, 2.0}, {4.0, 0.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC12();
+        });
+
+        String expectedMessage = "LENGTH2 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
     // LIC13
 
     // LIC14
 
     /**
-     * Check that LIC14 returns true if there exist two sets of three points, separated by exactly E_PTS
-     * and F_PTS consecutive intervening points, with areas greater than AREA1 and AREA2, respectively.
+     * Check that LIC14 returns true if there exist two sets of three points, separated by E_PTS and
+     * F_PTS consecutive intervening points, with areas greater than AREA1 and less than AREA2, respectively.
      */
     @Test
     public void LIC14PositiveCase() throws IllegalParameterObjectException {
@@ -657,8 +722,6 @@ public class DecideTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
-
 
     /**
      * Tests so that given a CMV the PUM function outputs the correct PUM vector.

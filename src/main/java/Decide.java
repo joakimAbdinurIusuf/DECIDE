@@ -94,14 +94,9 @@ public class Decide {
             throw new IllegalParameterObjectException("AREA1 cannot be negative.");
         }
 
-        double firstTerm, secondTerm, thirdTerm, triangleArea;
-
+        double triangleArea;
         for (int i = 0; i < numpoints-2; i++){
-            firstTerm = points[i][0] * (points[i+1][1] - points[i+2][1]);
-            secondTerm = points[i+1][0] * (points[i+2][1] - points[i][1]);
-            thirdTerm = points[i+2][0] * (points[i][1] - points[i+1][1]);
-
-            triangleArea = Math.abs(firstTerm + secondTerm + thirdTerm)/2;
+            triangleArea = triangleArea(points[i], points[i+1], points[i+2]);
 
             if (Double.compare(triangleArea, parameters.getAREA1()) > 0) {
                 return true;
@@ -328,6 +323,50 @@ public class Decide {
             }
         }
         return false;
+    }
+
+     * Check if LIC12 is true
+     *
+     * @return true if there exists at least one or two sets of two data points, separated by K_PTS
+     * consecutive intervening points, which are a distance greater than LENGTH1 apart, or a distance
+     * less than LENGTH2 apart (both needs to be fulfilled), otherwise, return false.
+     *
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC12() throws IllegalParameterObjectException{
+        if (parameters.getLENGTH2() < 0) {
+            throw new IllegalParameterObjectException("LENGTH2 cannot be negative.");
+        } else if (numpoints < 3) {
+            return false;
+        }
+
+        int K_PTS = parameters.getK_PTS();
+        int lastIndex = numpoints - K_PTS - 1;
+        boolean isLargerThanLENGTH1 = false;
+        boolean isLessThanLENGTH2 = false;
+
+        for (int i = 0; i < lastIndex; i++) {
+            double distance = distanceBetween2Points(points[i], points[i+K_PTS+1]);
+
+            if (Double.compare(distance, parameters.getLENGTH1()) > 0) {
+                isLargerThanLENGTH1 = true;
+            }
+            if (Double.compare(distance, parameters.getLENGTH2()) < 0) {
+                isLessThanLENGTH2 = true;
+            }
+            if (isLargerThanLENGTH1 && isLessThanLENGTH2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public double distanceBetween2Points(double[] point1, double[] point2) {
+        double xDifference = Math.abs(point2[0] - point1[0]);
+        double yDifference = Math.abs(point2[1] - point1[1]);
+
+        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
     }
 
     /**
