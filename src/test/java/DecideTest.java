@@ -734,13 +734,16 @@ public class DecideTest {
         assertArrayEquals(new boolean[][]{ { true, true }, { true, false } }, d.PUM(CMV));
     }
 
+    /**
+     * Tests so that the PUM function throws an exception if it gets arguments with bad dimensions.
+     */
     @Test
     public void PUMWrongDimensions() {
         boolean[] CMV = new boolean[]{ true, false };
         LCM lcm = new LCM(new Logic[][]{ { Logic.ANDD, Logic.ORR }});
         Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), lcm, new boolean[]{});
         assertThrows(IllegalParameterObjectException.class, () -> {
-            d.LIC14();
+            d.PUM(CMV);
         });
     }
 }

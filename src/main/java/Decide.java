@@ -419,7 +419,10 @@ public class Decide {
      * @param CMV
      * @return PUM
      */
-    public boolean[][] PUM(boolean[] CMV) {
+    public boolean[][] PUM(boolean[] CMV) throws IllegalParameterObjectException {
+        if (lcm.size() != CMV.length) {
+            throw new IllegalParameterObjectException("The LCM and the CMV should have the same dimensions.\n");
+        }
         boolean[][] PUM;
         PUM = new boolean[CMV.length][CMV.length];
         for (int i = 0; i < CMV.length; i++) {

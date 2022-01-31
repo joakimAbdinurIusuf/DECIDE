@@ -24,4 +24,11 @@ public class LCM {
         }
         return res;
     }
+
+    public int size() throws IllegalParameterObjectException {
+        if (lcm.length != lcm[0].length) {
+            throw new IllegalParameterObjectException("LCM does not have the right dimensions.\n");
+        }
+        return lcm.length;
+    }
 }
