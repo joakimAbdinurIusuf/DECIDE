@@ -83,6 +83,24 @@ public class DecideTest {
         assertFalse(LIC1False);
     }
 
+    @Test
+    public void LIC1Exception () {
+        double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC1();
+        });
+
+        String expectedMessage = "RADIUS1 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
     // LIC2
 
     /**
