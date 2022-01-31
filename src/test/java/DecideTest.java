@@ -733,4 +733,28 @@ public class DecideTest {
         Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), lcm, new boolean[]{});
         assertArrayEquals(new boolean[][]{ { true, true }, { true, false } }, d.PUM(CMV));
     }
+
+    /**
+     * Tests so that given a PUV with all false, the FUV is calculated correctly
+     */
+    @Test 
+    public void FUVPUVAllFalseTest() {
+        boolean[] puv = new boolean[]{false, false, false, false};
+        Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), new LCM(null), puv);
+        boolean[] actual = d.FUV(new boolean[][]{ {false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false} });
+        boolean[] expected = new boolean[]{true, true, true, true};
+        assertArrayEquals(expected, actual);
+    }
+
+    /**
+     * Tests so that given a PUV with all true, the FUV is calculated correctly
+     */
+    @Test 
+    public void FUVPUVAllTrueTest() {
+        boolean[] puv = new boolean[]{true, true, true, true};
+        Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), new LCM(null), puv);
+        boolean[] actual = d.FUV(new boolean[][]{ {true, true, true, true}, {false, false, false, false}, {true, false, false, true}, {false, true, true, true} });
+        boolean[] expected = new boolean[]{true, false, false, false};
+        assertArrayEquals(expected, actual);
+    }
 }
