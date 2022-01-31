@@ -82,7 +82,7 @@ public class Decide {
 
                 angle = Math.acos(dotProduct / (norm1 * norm2));
 
-                if (angle < (Math.PI - parameters.getEPSILON()) || angle > (Math.PI + parameters.getEPSILON())) {
+                if (angle < (Math.PI - parameters.getEPSILON()) || angle >= (Math.PI + parameters.getEPSILON())) {
                     return true;
                 }
             }
