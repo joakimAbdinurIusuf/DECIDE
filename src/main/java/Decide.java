@@ -413,6 +413,12 @@ public class Decide {
         return Math.abs(firstTerm + secondTerm + thirdTerm) / 2;
     }
 
+    /**
+     * Calculates the PUM. PUM[i][j] is the result of the logical operation
+     * LCM[i][j] applied on CMV[i] and CMV[j].
+     * @param CMV
+     * @return PUM
+     */
     public boolean[][] PUM(boolean[] CMV) {
         boolean[][] PUM;
         PUM = new boolean[CMV.length][CMV.length];
