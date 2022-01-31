@@ -55,6 +55,34 @@ public class DecideTest {
 
     // LIC1
 
+    /**
+     * Check that LIC1 returns true if there exists at least one set of three consecutive data points
+     * that cannot all be contained within or on a circle of radius RADIUS1.
+     */
+    @Test
+    public void LIC1PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC1True = decide.LIC1();
+        assertTrue(LIC1True);
+    }
+
+    /**
+     * Check that LIC1 returns false if there does not exist at least one set of three consecutive data points
+     * that cannot all be contained within or on a circle of radius RADIUS1.
+     */
+    @Test
+    public void LIC1NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC1False = decide.LIC1();
+        assertFalse(LIC1False);
+    }
+
     // LIC2
 
     /**
