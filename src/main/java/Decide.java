@@ -248,13 +248,6 @@ public class Decide {
         return false;
     }
 
-    public double distanceBetween2Points(double[] point1, double[] point2) {
-        double xDifference = Math.abs(point2[0] - point1[0]);
-        double yDifference = Math.abs(point2[1] - point1[1]);
-
-        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
-    }
-
     /**
      Calculates distance between line and point given two points on the line
      *
@@ -272,12 +265,44 @@ public class Decide {
         return distance;
     }
 
-     /* Check if LIC7 is true.
+    /** Check if LIC7 is true.
      *
-     * @return true if there exists two consecutive data points such that X_i+1 - X_i < 0
+     * @return true if there exists one set of two data points separated by exactly
+     * K PTS consecutive intervening points that are a distance greater than the length, false otherwise.
      */
-    public boolean LIC7() {
+    public boolean LIC7() throws IllegalParameterObjectException {
+        if (numpoints < 3) {
+            return false;
+        }
+        throwExceptionsLIC7();
+
+        int K_PTS = parameters.getK_PTS();
+        double[] firstPoint, secondPoint;
+        double LENGTH1 = parameters.getLENGTH1();
+
+        for (int i = 0; i < numpoints - K_PTS - 1; i++) {
+            firstPoint = points[i];
+            secondPoint = points[i + K_PTS + 1];
+            if (distanceBetween2Points(firstPoint, secondPoint) > LENGTH1) {
+                return true;
+            }
+        }
         return false;
+    }
+
+    private void throwExceptionsLIC7() throws IllegalParameterObjectException {
+        if (parameters.getK_PTS() < 1) {
+            throw new IllegalParameterObjectException("K_PTS must be greater or equal to 1.");
+        } else if (parameters.getK_PTS() > numpoints - 2) {
+            throw new IllegalParameterObjectException("K_PTS must be less than or equal to numpoints - 2.");
+        }
+    }
+
+    public double distanceBetween2Points(double[] point1, double[] point2) {
+        double xDifference = Math.abs(point2[0] - point1[0]);
+        double yDifference = Math.abs(point2[1] - point1[1]);
+
+        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
     }
 
     /**
