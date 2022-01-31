@@ -48,6 +48,49 @@ public class Decide {
     }
 
     /**
+     * Check if LIC2 is true.
+     * Calculates the angle between three consecutive points, the second point being located at the vertex
+     * of the angle.
+     *
+     * @return true if the angle < pi - epsilon or angle > pi + epsilon
+     *
+     */
+    public boolean LIC2() throws IllegalParameterObjectException {
+        if (parameters.getEPSILON() < 0 || parameters.getEPSILON() > Math.PI) {
+            throw new IllegalParameterObjectException("Epsilon must be greater than 0 and less than pi.");
+        }
+
+        double xDifference1;
+        double yDifference1;
+        double xDifference2;
+        double yDifference2;
+        double dotProduct;
+        double norm1;
+        double norm2;
+        double angle;
+
+        for (int i = 1; i < numpoints - 1; i++) {
+            if(!(points[i - 1] == points[i]) || (points[i + 1] == points[i])) {
+                xDifference1 = points[i][0] - points[i - 1][0];
+                yDifference1 = points[i][1] - points[i - 1][1];
+                xDifference2 = points[i + 1][0] - points[i][0];
+                yDifference2 = points[i + 1][1] - points[i][1];
+
+                dotProduct = xDifference1 * xDifference2 + yDifference1 * yDifference2;
+                norm1 = Math.sqrt(Math.pow(xDifference1, 2) + Math.pow(yDifference1, 2));
+                norm2 = Math.sqrt(Math.pow(xDifference2, 2) + Math.pow(yDifference2, 2));
+
+                angle = Math.acos(dotProduct / (norm1 * norm2));
+
+                if (angle < (Math.PI - parameters.getEPSILON()) || angle >= (Math.PI + parameters.getEPSILON())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Check if LIC3 is true.
      *
      * @return true if any three consecutive points forms a triangle with larger area than AREA1, false

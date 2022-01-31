@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,6 +56,52 @@ public class DecideTest {
     // LIC1
 
     // LIC2
+
+    /**
+     *
+     * @throws IllegalParameterObjectException
+     */
+    @Test
+    public void LIC2PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC2True = decide.LIC2();
+        assertTrue(LIC2True);
+    }
+
+    @Test
+    public void LIC2NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0.9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC2False = decide.LIC2();
+        assertFalse(LIC2False);
+    }
+
+    /**
+     * Throws exception when epsilon is less than 0 or greater than pi.
+     */
+    @ParameterizedTest
+    @ValueSource(doubles={-1, 5})
+    public void LIC2Exception(double epsilon) {
+        double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, epsilon, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC2();
+        });
+
+        String expectedMessage = "Epsilon must be greater than 0 and less than pi.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 
     // LIC3
 
