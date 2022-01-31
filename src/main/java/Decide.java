@@ -56,18 +56,11 @@ public class Decide {
      *
      */
     public boolean LIC2() throws IllegalParameterObjectException {
-        if (parameters.getEPSILON() < 0 || parameters.getEPSILON() > Math.PI) {
+        if (parameters.getEPSILON() < 0 || parameters.getEPSILON() >= Math.PI) {
             throw new IllegalParameterObjectException("Epsilon must be greater than 0 and less than pi.");
         }
 
-        double xDifference1;
-        double yDifference1;
-        double xDifference2;
-        double yDifference2;
-        double dotProduct;
-        double norm1;
-        double norm2;
-        double angle;
+        double xDifference1, yDifference1, xDifference2, yDifference2, dotProduct, norm1, norm2, angle;
 
         for (int i = 1; i < numpoints - 1; i++) {
             if(!(points[i - 1] == points[i]) || (points[i + 1] == points[i])) {
@@ -82,7 +75,7 @@ public class Decide {
 
                 angle = Math.acos(dotProduct / (norm1 * norm2));
 
-                if (angle < (Math.PI - parameters.getEPSILON()) || angle >= (Math.PI + parameters.getEPSILON())) {
+                if (angle < (Math.PI - parameters.getEPSILON()) || angle > (Math.PI + parameters.getEPSILON())) {
                     return true;
                 }
             }
