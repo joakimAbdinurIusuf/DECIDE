@@ -294,6 +294,51 @@ public class Decide {
     }
 
     /**
+     * Check if LIC12 is true
+     *
+     * @return true if there exists at least one or two sets of two data points, separated by K_PTS
+     * consecutive intervening points, which are a distance greater than LENGTH1 apart, or a distance
+     * less than LENGTH2 apart (both needs to be fulfilled), otherwise, return false.
+     *
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC12() throws IllegalParameterObjectException{
+        if (parameters.getLENGTH2() < 0) {
+            throw new IllegalParameterObjectException("LENGTH2 cannot be negative.");
+        } else if (numpoints < 3) {
+            return false;
+        }
+
+        int K_PTS = parameters.getK_PTS();
+        int lastIndex = numpoints - K_PTS - 1;
+        boolean isLargerThanLENGTH1 = false;
+        boolean isLessThanLENGTH2 = false;
+
+        for (int i = 0; i < lastIndex; i++) {
+            double distance = distanceBetween2Points(points[i], points[i+K_PTS+1]);
+
+            if (Double.compare(distance, parameters.getLENGTH1()) > 0) {
+                isLargerThanLENGTH1 = true;
+            }
+            if (Double.compare(distance, parameters.getLENGTH2()) < 0) {
+                isLessThanLENGTH2 = true;
+            }
+            if (isLargerThanLENGTH1 && isLessThanLENGTH2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public double distanceBetween2Points(double[] point1, double[] point2) {
+        double xDifference = Math.abs(point2[0] - point1[0]);
+        double yDifference = Math.abs(point2[1] - point1[1]);
+
+        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+    }
+
+    /**
      * Check if LIC14 is true.
      *
      * @return true if there exists at least one or two sets of three data points, separated by E_PTS and
