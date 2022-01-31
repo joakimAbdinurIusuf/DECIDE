@@ -556,7 +556,7 @@ public class DecideTest {
             decide.LIC10();
         });
 
-        String expectedMessage = "E_PTS must be larger than or equal to 1";
+        String expectedMessage = "E_PTS must be larger than or equal to 1.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -575,7 +575,7 @@ public class DecideTest {
             decide.LIC10();
         });
 
-        String expectedMessage = "F_PTS must be larger than or equal to 1";
+        String expectedMessage = "F_PTS must be larger than or equal to 1.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -594,7 +594,7 @@ public class DecideTest {
             decide.LIC10();
         });
 
-        String expectedMessage = "The sum of E_PTS and F_PTS must be less than or equal to numpoints - 3";
+        String expectedMessage = "The sum of E_PTS and F_PTS must be less than or equal to numpoints - 3.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
