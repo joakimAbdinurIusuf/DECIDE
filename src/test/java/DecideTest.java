@@ -524,8 +524,8 @@ public class DecideTest {
     // LIC14
 
     /**
-     * Check that LIC14 returns true if there exist two sets of three points, separated by exactly E_PTS
-     * and F_PTS consecutive intervening points, with areas greater than AREA1 and AREA2, respectively.
+     * Check that LIC14 returns true if there exist two sets of three points, separated by E_PTS and
+     * F_PTS consecutive intervening points, with areas greater than AREA1 and less than AREA2, respectively.
      */
     @Test
     public void LIC14PositiveCase() throws IllegalParameterObjectException {
