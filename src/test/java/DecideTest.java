@@ -515,6 +515,92 @@ public class DecideTest {
 
     // LIC10
 
+    /**
+     * Check that LIC10 returns true if there exists a set of three data points separated by E_PTS and F_PTS consecutive
+     * intervening points that are vertices of a triangle with an area greater than AREA1.
+     */
+    @Test
+    public void LIC10PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {-100.0, 0.0}, {0.0, 0.0}, {-100, -100}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC10True = decide.LIC10();
+        assertTrue(LIC10True);
+    }
+
+    /**
+     * Check that LIC10 returns false if there does not exist a set of three data points separated by E_PTS and F_PTS consecutive
+     * intervening points that are vertices of a triangle with an area greater than AREA1.
+     */
+    @Test
+    public void LIC10NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {-10.0, 0.0}, {0.0, 0.0}, {-10, -10}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC10False = decide.LIC10();
+        assertFalse(LIC10False);
+    }
+
+    /**
+     * Test if LIC10 throws exception when E_PTS is < 1.
+     */
+    @Test
+    public void LIC10Exception1() {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC10();
+        });
+
+        String expectedMessage = "E_PTS must be larger than or equal to 1.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC10 throws exception when F_PTS is < 1.
+     */
+    @Test
+    public void LIC10Exception2() {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC10();
+        });
+
+        String expectedMessage = "F_PTS must be larger than or equal to 1.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC10 throws exception when E_PTS + F_PTS > numpoints - 3.
+     */
+    @Test
+    public void LIC10Exception3() {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC10();
+        });
+
+        String expectedMessage = "The sum of E_PTS and F_PTS must be less than or equal to numpoints - 3.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
     // LIC11
 
     // LIC12

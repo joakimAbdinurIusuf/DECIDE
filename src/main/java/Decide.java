@@ -294,6 +294,37 @@ public class Decide {
     }
 
     /**
+     * Check if LIC10 is true.
+     *
+     * @return true if There exists at least one set of three data points separated by E_PTS and F_PTS consecutive
+     * intervening points, that are the vertices of a triangle with area greater than AREA1, false otherwise.
+     *
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC10() throws IllegalParameterObjectException {
+        if (parameters.getE_PTS() < 1) {
+            throw new IllegalParameterObjectException("E_PTS must be larger than or equal to 1.");
+        } else if (parameters.getF_PTS() < 1) {
+            throw new IllegalParameterObjectException("F_PTS must be larger than or equal to 1.");
+        } else if (parameters.getE_PTS() + parameters.getF_PTS() > numpoints - 3) {
+            throw new IllegalParameterObjectException("The sum of E_PTS and F_PTS must be less than or equal to numpoints - 3.");
+        } else if (numpoints < 5) {
+            return false;
+        }
+
+        int E_PTS = parameters.getE_PTS();
+        int F_PTS = parameters.getF_PTS();
+        int lastIndex = numpoints - E_PTS - F_PTS - 2;
+
+        for (int i = 0; i < lastIndex; i++) {
+            double triangleArea = triangleArea(points[i], points[i+E_PTS+1], points[i+E_PTS+F_PTS+2]);
+            if (Double.compare(triangleArea, parameters.getAREA1()) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
      * Check if LIC12 is true
      *
      * @return true if there exists at least one or two sets of two data points, separated by K_PTS
