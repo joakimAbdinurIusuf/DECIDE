@@ -286,13 +286,6 @@ public class Decide {
         }
     }
 
-    public double distanceBetween2Points(double[] point1, double[] point2) {
-        double xDifference = Math.abs(point2[0] - point1[0]);
-        double yDifference = Math.abs(point2[1] - point1[1]);
-
-        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
-    }
-
     /**
      * Check if LIC10 is true.
      *
@@ -325,7 +318,7 @@ public class Decide {
         return false;
     }
 
-     * Check if LIC12 is true
+    /** Check if LIC12 is true
      *
      * @return true if there exists at least one or two sets of two data points, separated by K_PTS
      * consecutive intervening points, which are a distance greater than LENGTH1 apart, or a distance
