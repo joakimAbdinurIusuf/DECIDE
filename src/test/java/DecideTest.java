@@ -738,7 +738,7 @@ public class DecideTest {
      * Tests so that given a PUV with all false, the FUV is calculated correctly
      */
     @Test 
-    public void FUVPUVAllFalseTest() {
+    public void FUVPUVAllFalseTest() throws IllegalParameterObjectException {
         boolean[] puv = new boolean[]{false, false, false, false};
         Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), new LCM(null), puv);
         boolean[] actual = d.FUV(new boolean[][]{ {false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false} });
@@ -750,7 +750,7 @@ public class DecideTest {
      * Tests so that given a PUV with all true, the FUV is calculated correctly
      */
     @Test 
-    public void FUVPUVAllTrueTest() {
+    public void FUVPUVAllTrueTest() throws IllegalParameterObjectException {
         boolean[] puv = new boolean[]{true, true, true, true};
         Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), new LCM(null), puv);
         boolean[] actual = d.FUV(new boolean[][]{ {true, true, true, true}, {false, false, false, false}, {true, false, false, true}, {false, true, true, true} });
