@@ -63,7 +63,7 @@ public class Decide {
     /**
      * Checks if three points are all contained within or on a circle with a given radius
      *
-     * @return true if all the points are contained within a circle with the given radius
+     * @return true if all the points are contained within or on a circle with the given radius
      */
     public boolean isPointsContainedInCircle(double[] point1, double[] point2, double[] point3, double radius) {
         double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
