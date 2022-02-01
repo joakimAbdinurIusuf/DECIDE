@@ -76,7 +76,31 @@ public class Decide {
             }
 
         }
+        return false;
+    }
 
+    public boolean isPointsContainedInCircle(double[] point1, double[] point2, double[] point3) {
+        double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
+
+        distanceP1P2 = distanceBetween2Points(point1, point2);
+        distanceP1P3 = distanceBetween2Points(point1, point3);
+        distanceP2P3 = distanceBetween2Points(point2, point3);
+
+        triangleArea = triangleArea(point1, point2, point3);
+
+        if (triangleArea != 0) {
+            diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
+
+            if (diameter/2 < parameters.getRADIUS1()) {
+                return true;
+            }
+        }
+        else {  // if area = 0, the points are collinear
+            maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
+            if (maxDistance < parameters.getRADIUS1()) {
+                return true;
+            }
+        }
         return false;
     }
 
