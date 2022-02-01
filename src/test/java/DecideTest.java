@@ -559,6 +559,63 @@ public class DecideTest {
 
     // LIC9
 
+    /**
+     * Test if LIC9 throws exception when C_PTS is < 1.
+     */
+    @Test
+    public void LIC9Exception1() {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC9();
+        });
+
+        String expectedMessage = "C_PTS must be larger than or equal to 1.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC9 throws exception when D_PTS is < 1.
+     */
+    @Test
+    public void LIC9Exception2() {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC9();
+        });
+
+        String expectedMessage = "D_PTS must be larger than or equal to 1.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test if LIC9 throws exception when C_PTS + D_PTS > numpoints - 3.
+     */
+    @Test
+    public void LIC9Exception3() {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC9();
+        });
+
+        String expectedMessage = "The sum of C_PTS and D_PTS must be less than or equal to numpoints - 3.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
     // LIC10
 
     /**
