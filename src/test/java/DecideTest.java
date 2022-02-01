@@ -742,8 +742,13 @@ public class DecideTest {
         boolean[] CMV = new boolean[]{ true, false };
         LCM lcm = new LCM(new Logic[][]{ { Logic.ANDD, Logic.ORR }});
         Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), lcm, new boolean[]{});
-        assertThrows(IllegalParameterObjectException.class, () -> {
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             d.PUM(CMV);
         });
+
+        String expectedMessage = "LCM does not have the right dimensions.\n";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
