@@ -560,19 +560,45 @@ public class DecideTest {
     // LIC9
 
     /**
+     * Tests if LIC9 returns true if there exists at least one set of three data points separated by exactly
+     * C PTS and D PTS consecutive intervening points, respectively, that form an angle such that
+     * angle < (pi - epsilon) or angle > (pi + epsilon)
+     * @throws IllegalParameterObjectException
+     */
+    @Test
+    public void LIC9PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC9True = decide.LIC9();
+        assertTrue(LIC9True);
+    }
+
+    @Test
+    public void LIC9NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0.9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC9False = decide.LIC9();
+        assertFalse(LIC9False);
+    }
+
+    /**
      * Test if LIC9 throws exception when C_PTS is < 1.
      */
     @Test
     public void LIC9Exception1() {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             decide.LIC9();
         });
 
-        String expectedMessage = "C_PTS must be larger than or equal to 1.";
+        String expectedMessage = "C_PTS must be greater or equal to 1.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -585,13 +611,13 @@ public class DecideTest {
     public void LIC9Exception2() {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             decide.LIC9();
         });
 
-        String expectedMessage = "D_PTS must be larger than or equal to 1.";
+        String expectedMessage = "D_PTS must be greater or equal to 1.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -604,7 +630,7 @@ public class DecideTest {
     public void LIC9Exception3() {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
             decide.LIC9();
