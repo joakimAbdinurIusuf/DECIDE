@@ -359,6 +359,35 @@ public class Decide {
         return false;
     }
 
+    /**
+     * Checks if LIC11 id true
+     * @return true if there exsists two data points separated by G_PTS consecutive points 
+     * such that X[i] - X[j] < 0 where i < j
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC11() throws IllegalParameterObjectException {
+        if (numpoints < 3) {
+            return false;
+        }
+        if (parameters.getG_PTS() > numpoints - 2) {
+            throw new IllegalParameterObjectException("G_PTS should be less than or equal to NUMPOINTS - 2\n");
+        }
+        if (parameters.getG_PTS() < 1) {
+            throw new IllegalParameterObjectException("G_PTS should be greater than 1\n");
+        }
+        
+        int g_pts = parameters.getG_PTS();
+        int j;
+        for (int i = 0; i < numpoints - g_pts - 1; i++) {
+            j = i + g_pts + 1;
+            if (points[j][0] - points[i][0] < 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     /** Check if LIC12 is true
      *
      * @return true if there exists at least one or two sets of two data points, separated by K_PTS
