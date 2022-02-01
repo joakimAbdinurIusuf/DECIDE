@@ -52,34 +52,20 @@ public class Decide {
             throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
         }
 
-        double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
-
         for (int i = 0; i < numpoints - 2; i++) {
-            distanceP1P2 = distanceBetween2Points(points[i], points[i+1]);
-            distanceP1P3 = distanceBetween2Points(points[i], points[i+2]);
-            distanceP2P3 = distanceBetween2Points(points[i+1], points[i+2]);
-
-            triangleArea = triangleArea(points[i], points[i+1], points[i+2]);
-
-            if (triangleArea != 0) {
-                diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
-
-                if (diameter/2 > parameters.getRADIUS1()) {
-                    return true;
-                }
+            if (!isPointsContainedInCircle(points[i], points[i+1], points[i+2], parameters.getRADIUS1())) {
+                return true;
             }
-            else {  // if area = 0, the points are collinear
-                maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
-                if (maxDistance > parameters.getRADIUS1()) {
-                    return true;
-                }
-            }
-
         }
         return false;
     }
 
-    public boolean isPointsContainedInCircle(double[] point1, double[] point2, double[] point3) {
+    /**
+     * Checks if three points are all on or contained within a circle with a given radius
+     *
+     * @return true if all the points are contained within a cirlce with the given radius
+     */
+    public boolean isPointsContainedInCircle(double[] point1, double[] point2, double[] point3, double radius) {
         double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
 
         distanceP1P2 = distanceBetween2Points(point1, point2);
@@ -91,13 +77,13 @@ public class Decide {
         if (triangleArea != 0) {
             diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
 
-            if (diameter/2 < parameters.getRADIUS1()) {
+            if (diameter/2 < radius) {
                 return true;
             }
         }
         else {  // if area = 0, the points are collinear
             maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
-            if (maxDistance < parameters.getRADIUS1()) {
+            if (maxDistance < radius) {
                 return true;
             }
         }
