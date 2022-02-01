@@ -47,6 +47,39 @@ public class Decide {
         return false;
     }
 
+    public boolean LIC1() throws IllegalParameterObjectException {
+        if(parameters.getRADIUS1() < 0) {
+            throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
+        }
+
+        double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
+
+        for (int i = 0; i < numpoints - 2; i++) {
+            distanceP1P2 = distanceBetween2Points(points[i], points[i+1]);
+            distanceP1P3 = distanceBetween2Points(points[i], points[i+2]);
+            distanceP2P3 = distanceBetween2Points(points[i+1], points[i+2]);
+
+            triangleArea = triangleArea(points[i], points[i+1], points[i+2]);
+
+            if (triangleArea != 0) {
+                diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
+
+                if (diameter/2 > parameters.getRADIUS1()) {
+                    return true;
+                }
+            }
+            else {  // if area = 0, the points are collinear
+                maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
+                if (maxDistance > parameters.getRADIUS1()) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
+
     /**
      * Check if LIC2 is true.
      * Calculates the angle between three consecutive points, the second point being located at the vertex
