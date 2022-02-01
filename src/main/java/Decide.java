@@ -454,7 +454,16 @@ public class Decide {
         return Math.abs(firstTerm + secondTerm + thirdTerm) / 2;
     }
 
-    public boolean[][] PUM(boolean[] CMV) {
+    /**
+     * Calculates the PUM. PUM[i][j] is the result of the logical operation
+     * LCM[i][j] applied on CMV[i] and CMV[j].
+     * @param CMV
+     * @return PUM
+     */
+    public boolean[][] PUM(boolean[] CMV) throws IllegalParameterObjectException {
+        if (lcm.size() != CMV.length) {
+            throw new IllegalParameterObjectException("The LCM and the CMV should have the same dimensions.\n");
+        }
         boolean[][] PUM;
         PUM = new boolean[CMV.length][CMV.length];
         for (int i = 0; i < CMV.length; i++) {
