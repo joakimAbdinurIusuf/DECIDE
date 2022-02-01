@@ -434,7 +434,10 @@ public class Decide {
      * @param PUM - Preliminary Unlocking Matrix 
      * @return FUV
     */
-    public boolean[] FUV(boolean[][] PUM) {
+    public boolean[] FUV(boolean[][] PUM) throws IllegalParameterObjectException {
+        if (puv.length != PUM.length) {
+            throw new IllegalParameterObjectException("PUV has the wrong dimensions.\n");
+        }
         boolean[] FUV;
         FUV = new boolean[PUM.length];
         for (int i = 0; i < PUM.length; i++) {
