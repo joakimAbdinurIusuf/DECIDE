@@ -33,12 +33,10 @@ public class Decide {
             throw new IllegalParameterObjectException("LENGTH1 cannot be negative.");
         }
 
-        double xDifference, yDifference, distance;
+        double distance;
 
         for (int i = 0; i < numpoints - 1; i++) {
-            xDifference = Math.abs(points[i + 1][0] - points[i][0]);
-            yDifference = Math.abs(points[i + 1][1] - points[i][1]);
-            distance = Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+            distance = distanceBetween2Points(points[i], points[i + 1]);
 
             if (Double.compare(distance, parameters.getLENGTH1()) > 0) {
                 return true;
