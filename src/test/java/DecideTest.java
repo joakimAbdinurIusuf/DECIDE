@@ -55,6 +55,52 @@ public class DecideTest {
 
     // LIC1
 
+    /**
+     * Check that LIC1 returns true if there exists at least one set of three consecutive data points
+     * that cannot all be contained within or on a circle of radius RADIUS1.
+     */
+    @Test
+    public void LIC1PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC1True = decide.LIC1();
+        assertTrue(LIC1True);
+    }
+
+    /**
+     * Check that LIC1 returns false if there does not exist at least one set of three consecutive data points
+     * that cannot all be contained within or on a circle of radius RADIUS1.
+     */
+    @Test
+    public void LIC1NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC1False = decide.LIC1();
+        assertFalse(LIC1False);
+    }
+
+    @Test
+    public void LIC1Exception () {
+        double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC1();
+        });
+
+        String expectedMessage = "RADIUS1 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
     // LIC2
 
     /**
@@ -727,7 +773,7 @@ public class DecideTest {
      * Tests so that given a CMV the PUM function outputs the correct PUM vector.
      */
     @Test
-    public void givenCMV_whenPUM_thenCorrectPUM() {
+    public void givenCMV_whenPUM_thenCorrectPUM() throws IllegalParameterObjectException {
         boolean[] CMV = new boolean[]{ true, false };
         LCM lcm = new LCM(new Logic[][]{ { Logic.ANDD, Logic.ORR }, { Logic.NOTUSED, Logic.ANDD } });
         Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), lcm, new boolean[]{});
@@ -770,6 +816,24 @@ public class DecideTest {
         });
 
         String expectedMessage = "PUV has the wrong dimensions.\n";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+  
+    /**
+     * Tests so that the PUM function throws an exception if it gets arguments with bad dimensions.
+     */
+    @Test
+    public void PUMWrongDimensions() {
+        boolean[] CMV = new boolean[]{ true, false };
+        LCM lcm = new LCM(new Logic[][]{ { Logic.ANDD, Logic.ORR }});
+        Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), lcm, new boolean[]{});
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            d.PUM(CMV);
+        });
+
+        String expectedMessage = "LCM does not have the right dimensions.\n";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

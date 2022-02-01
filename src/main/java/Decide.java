@@ -35,14 +35,55 @@ public class Decide {
             throw new IllegalParameterObjectException("LENGTH1 cannot be negative.");
         }
 
-        double xDifference, yDifference, distance;
+        double distance;
 
         for (int i = 0; i < numpoints - 1; i++) {
-            xDifference = Math.abs(points[i + 1][0] - points[i][0]);
-            yDifference = Math.abs(points[i + 1][1] - points[i][1]);
-            distance = Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+            distance = distanceBetween2Points(points[i], points[i + 1]);
 
             if (Double.compare(distance, parameters.getLENGTH1()) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean LIC1() throws IllegalParameterObjectException {
+        if(parameters.getRADIUS1() < 0) {
+            throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
+        }
+
+        for (int i = 0; i < numpoints - 2; i++) {
+            if (!isPointsContainedInCircle(points[i], points[i+1], points[i+2], parameters.getRADIUS1())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if three points are all contained within or on a circle with a given radius
+     *
+     * @return true if all the points are contained within or on a circle with the given radius
+     */
+    public boolean isPointsContainedInCircle(double[] point1, double[] point2, double[] point3, double radius) {
+        double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
+
+        distanceP1P2 = distanceBetween2Points(point1, point2);
+        distanceP1P3 = distanceBetween2Points(point1, point3);
+        distanceP2P3 = distanceBetween2Points(point2, point3);
+
+        triangleArea = triangleArea(point1, point2, point3);
+
+        if (triangleArea != 0) {
+            diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
+
+            if (diameter/2 <= radius) {
+                return true;
+            }
+        }
+        else {  // if area = 0, the points are collinear
+            maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
+            if (maxDistance <= radius) {
                 return true;
             }
         }
@@ -415,8 +456,17 @@ public class Decide {
         return Math.abs(firstTerm + secondTerm + thirdTerm) / 2;
     }
 
-    
-    public boolean[][] PUM(boolean[] CMV) {
+
+    /**
+     * Calculates the PUM. PUM[i][j] is the result of the logical operation
+     * LCM[i][j] applied on CMV[i] and CMV[j].
+     * @param CMV
+     * @return PUM
+     */
+    public boolean[][] PUM(boolean[] CMV) throws IllegalParameterObjectException {
+        if (lcm.size() != CMV.length) {
+            throw new IllegalParameterObjectException("The LCM and the CMV should have the same dimensions.\n");
+        }
         boolean[][] PUM;
         PUM = new boolean[CMV.length][CMV.length];
         for (int i = 0; i < CMV.length; i++) {
