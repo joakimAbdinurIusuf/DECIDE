@@ -77,13 +77,13 @@ public class Decide {
         if (triangleArea != 0) {
             diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
 
-            if (diameter/2 < radius) {
+            if (diameter/2 <= radius) {
                 return true;
             }
         }
         else {  // if area = 0, the points are collinear
             maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
-            if (maxDistance < radius) {
+            if (maxDistance <= radius) {
                 return true;
             }
         }
