@@ -329,12 +329,18 @@ public class Decide {
         }
     }
 
-    public boolean LIC9() {
-        double xDifference1, yDifference1, xDifference2, yDifference2, dotProduct, norm1, norm2, angle;
-
-        if (numpoints < 5) {
+    public boolean LIC9() throws IllegalParameterObjectException {
+        if (parameters.getC_PTS() < 1) {
+            throw new IllegalParameterObjectException("C_PTS must be greater or equal to 1.");
+        } else if (parameters.getD_PTS() < 1) {
+            throw new IllegalParameterObjectException("D_PTS must be greater or equal to 1.");
+        } else if (parameters.getC_PTS() + parameters.getD_PTS() > numpoints - 3) {
+            throw new IllegalParameterObjectException("The sum of C_PTS and D_PTS must be less than or equal to numpoints - 3.");
+        } else if (numpoints < 5) {
             return false;
         }
+
+        double xDifference1, yDifference1, xDifference2, yDifference2, dotProduct, norm1, norm2, angle;
 
         int C_PTS = parameters.getC_PTS();
         int D_PTS = parameters.getD_PTS();
