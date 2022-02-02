@@ -40,7 +40,7 @@ public class MainTest {
         boolean[] puv = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
         Decide decide = new Decide(numpoints, points, parameters, lcm, puv);
         decide.DECIDE();
-        assertEquals("YES\n", output.toString());
+        assertEquals("YES", output.toString().trim());
     }
 
     /**
@@ -63,7 +63,7 @@ public class MainTest {
         boolean[] puv = new boolean[]{true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
         Decide decide = new Decide(numpoints, points, parameters, lcm, puv);
         decide.DECIDE();
-        assertEquals("NO\n", output.toString());
+        assertEquals("NO", output.toString().trim());
     }
 
     /**
@@ -100,7 +100,7 @@ public class MainTest {
     }
 
     /**
-     * Resets the standard output after att tests are done.
+     * Resets the standard output after tests are done.
      */
     @AfterEach
     public void breakDown() {
