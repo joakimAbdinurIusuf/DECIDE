@@ -329,6 +329,12 @@ public class Decide {
         }
     }
 
+    /** Checks if LIC9 is true.
+     *
+     * @return true if there exists at least one set of three data points separated by exactly
+     * C_PTS and D_PTS consecutive intervening points, respectively, that form an angle such that
+     * angle < (pi - epsilon) or angle > (pi + epsilon)
+     */
     public boolean LIC9() throws IllegalParameterObjectException {
         if (parameters.getC_PTS() < 1) {
             throw new IllegalParameterObjectException("C_PTS must be greater or equal to 1.");
