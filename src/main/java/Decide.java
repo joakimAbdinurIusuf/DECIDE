@@ -375,20 +375,41 @@ public class Decide {
      * @throws IllegalParameterObjectException
      */
     public boolean LIC13() throws IllegalParameterObjectException {
-        if (parameters.getRADIUS1() < 0) {
-            throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
-        } else if (parameters.getRADIUS2() < 0) {
-            throw new IllegalParameterObjectException("RADIUS2 cannot be negative.");
-        } else if (numpoints < 5) {
+        throwExceptionsIfIllegalValuesRad1Rad2();
+        if (numpoints < 5) {
             return false;
         }
 
-        for (int i = 0; i < numpoints - 2; i++) {
-            if (!isPointsContainedInCircle(points[i], points[i+1], points[i+2], parameters.getRADIUS1())) {
+        double[] firstPoint, middlePoint, lastPoint;
+        int lastIndex = numpoints - parameters.getA_PTS() - parameters.getB_PTS() - 2;
+        boolean cannotBeContainedInCircleWithRADIUS1 = false;
+        boolean canBeContainedInCircleWithRADIUS2 = false;
+
+        for (int i = 0; i < lastIndex; i++) {
+            firstPoint = points[i];
+            middlePoint = points[i + parameters.getA_PTS() + 1];
+            lastPoint = points[i + parameters.getA_PTS() + parameters.getB_PTS() + 2];
+
+            if (!isPointsContainedInCircle(firstPoint, middlePoint, lastPoint, parameters.getRADIUS1())) {
+                cannotBeContainedInCircleWithRADIUS1 = true;
+            }
+            if (isPointsContainedInCircle(firstPoint, middlePoint, lastPoint, parameters.getRADIUS2())) {
+                canBeContainedInCircleWithRADIUS2 = true;
+            }
+            if (cannotBeContainedInCircleWithRADIUS1 && canBeContainedInCircleWithRADIUS2) {
                 return true;
             }
         }
         return false;
+    }
+
+
+    private void throwExceptionsIfIllegalValuesRad1Rad2() throws IllegalParameterObjectException {
+        if (parameters.getRADIUS1() < 0) {
+            throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
+        } else if (parameters.getRADIUS2() < 0) {
+            throw new IllegalParameterObjectException("RADIUS2 cannot be negative.");
+        }
     }
 
     /**
