@@ -83,6 +83,9 @@ public class DecideTest {
         assertFalse(LIC1False);
     }
 
+    /**
+     * Test that RADIUS1 is >= 0.
+     */
     @Test
     public void LIC1Exception() {
         double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
@@ -104,7 +107,7 @@ public class DecideTest {
     // LIC2
 
     /**
-     *
+     * Check that LIC2 returns true if the angle < pi - epsilon or angle > pi + epsilon.
      * @throws IllegalParameterObjectException
      */
     @Test
@@ -117,6 +120,10 @@ public class DecideTest {
         assertTrue(LIC2True);
     }
 
+    /**
+     * Check that LIC2 returns false if the angle < pi - epsilon or angle > pi + epsilon.
+     * @throws IllegalParameterObjectException
+     */
     @Test
     public void LIC2NegativeCase() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
@@ -1045,6 +1052,9 @@ public class DecideTest {
         assertFalse(LIC13False);
     }
 
+    /**
+     * Test that exception is thrown if RADIUS1 < 0.
+     */
     @Test
     public void LIC13ExceptionRadius1() {
         double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
@@ -1063,6 +1073,9 @@ public class DecideTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    /**
+     * Test that exception is thrown if RADIUS2 < 0.
+     */
     @Test
     public void LIC13ExceptionRadius2() {
         double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
