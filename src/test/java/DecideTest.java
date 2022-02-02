@@ -561,15 +561,15 @@ public class DecideTest {
 
     /**
      * Tests if LIC9 returns true if there exists at least one set of three data points separated by exactly
-     * C PTS and D PTS consecutive intervening points, respectively, that form an angle such that
+     * C_PTS and D_PTS consecutive intervening points, respectively, that form an angle such that
      * angle < (pi - epsilon) or angle > (pi + epsilon)
      * @throws IllegalParameterObjectException
      */
     @Test
     public void LIC9PositiveCase() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        double[][] points = new double[][]{{3.0, 4.0}, {1.0, 1.0}, {0.0, 0.0}, {1.0, 0.0}, {1.0, 0.0}, {1.0, 0.0}, {1.0, 3.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC9True = decide.LIC9();
         assertTrue(LIC9True);
@@ -577,9 +577,9 @@ public class DecideTest {
 
     @Test
     public void LIC9NegativeCase() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        double[][] points = new double[][]{{5.0, 5.0}, {1.0, 1.0}, {2.0, 2.0}, {1.0, 0.0}, {1.0, 0.0}, {1.0, 0.0}, {3.0, 5.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0.9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC9False = decide.LIC9();
         assertFalse(LIC9False);
