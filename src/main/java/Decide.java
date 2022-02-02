@@ -329,6 +329,49 @@ public class Decide {
         }
     }
 
+    /** Checks if LIC9 is true.
+     *
+     * @return true if there exists at least one set of three data points separated by exactly
+     * C_PTS and D_PTS consecutive intervening points, respectively, that form an angle such that
+     * angle < (pi - epsilon) or angle > (pi + epsilon)
+     */
+    public boolean LIC9() throws IllegalParameterObjectException {
+        if (parameters.getC_PTS() < 1) {
+            throw new IllegalParameterObjectException("C_PTS must be greater or equal to 1.");
+        } else if (parameters.getD_PTS() < 1) {
+            throw new IllegalParameterObjectException("D_PTS must be greater or equal to 1.");
+        } else if (parameters.getC_PTS() + parameters.getD_PTS() > numpoints - 3) {
+            throw new IllegalParameterObjectException("The sum of C_PTS and D_PTS must be less than or equal to numpoints - 3.");
+        } else if (numpoints < 5) {
+            return false;
+        }
+
+        double xDifference1, yDifference1, xDifference2, yDifference2, dotProduct, norm1, norm2, angle;
+
+        int C_PTS = parameters.getC_PTS();
+        int D_PTS = parameters.getD_PTS();
+
+        for (int i = 0; i < numpoints - 2 - C_PTS - D_PTS; i++) {
+            if(!(points[i] == points[i + C_PTS + 1]) || (points[i + C_PTS + D_PTS + 2] == points[i + C_PTS + 1])) {
+                xDifference1 = points[i][0] - points[i + C_PTS + 1][0]; // (p2 + C_PTS) - p1
+                yDifference1 = points[i][1] - points[i + C_PTS + 1][1];
+                xDifference2 = points[i + C_PTS + D_PTS + 2][0] - points[i + C_PTS + 1][0]; // (p3 + D_PTS) - (p2 + C_PTS)
+                yDifference2 = points[i + C_PTS + D_PTS + 2][1] - points[i + C_PTS + 1][1];
+
+                dotProduct = xDifference1 * xDifference2 + yDifference1 * yDifference2;
+                norm1 = Math.sqrt(Math.pow(xDifference1, 2) + Math.pow(yDifference1, 2));
+                norm2 = Math.sqrt(Math.pow(xDifference2, 2) + Math.pow(yDifference2, 2));
+
+                angle = Math.acos(dotProduct / (norm1 * norm2));
+
+                if (angle < (Math.PI - parameters.getEPSILON()) || angle > (Math.PI + parameters.getEPSILON())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Check if LIC10 is true.
      *
