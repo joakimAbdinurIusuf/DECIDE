@@ -365,7 +365,15 @@ public class Decide {
 
         return false;
     }
-    
+
+    /**
+     * Check if LIC13 is true.
+     *
+     * @return true if there exists at least one set of three data points, separated by exactly A_PTS and
+     * B PTS consecutive intervening points, respectively, that cannot be contained within or on a circle
+     * of radius RADIUS1, and another set that can be contained in or on a circle of radius RADIUS2.
+     * @throws IllegalParameterObjectException
+     */
     public boolean LIC13() throws IllegalParameterObjectException {
         if(parameters.getRADIUS1() < 0) {
             throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
