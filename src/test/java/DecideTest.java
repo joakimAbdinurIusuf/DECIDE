@@ -781,6 +781,47 @@ public class DecideTest {
     }
 
     /**
+     * Tests so that given a PUV with all false, the FUV is calculated correctly
+     */
+    @Test 
+    public void FUVPUVAllFalseTest() throws IllegalParameterObjectException {
+        boolean[] puv = new boolean[]{false, false, false, false};
+        Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), new LCM(null), puv);
+        boolean[] actual = d.FUV(new boolean[][]{ {false, false, false, false}, {false, false, false, false}, {false, false, false, false}, {false, false, false, false} });
+        boolean[] expected = new boolean[]{true, true, true, true};
+        assertArrayEquals(expected, actual);
+    }
+
+    /**
+     * Tests so that given a PUV with all true, the FUV is calculated correctly
+     */
+    @Test 
+    public void FUVPUVAllTrueTest() throws IllegalParameterObjectException {
+        boolean[] puv = new boolean[]{true, true, true, true};
+        Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), new LCM(null), puv);
+        boolean[] actual = d.FUV(new boolean[][]{ {true, true, true, true}, {false, false, false, false}, {true, false, false, true}, {false, true, true, true} });
+        boolean[] expected = new boolean[]{true, false, false, false};
+        assertArrayEquals(expected, actual);
+    }
+
+    /**
+     * Tests so that given a PUV with the wrong dimensions, the FUV throws an Exception
+     */
+    @Test 
+    public void FUVPUVWrongDimension() throws IllegalParameterObjectException {
+        boolean[] puv = new boolean[]{true};
+        Decide d = new Decide(0, new double[][]{{}}, new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), new LCM(null), puv);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            d.FUV(new boolean[][]{ {true, true, true, true}, {false, false, false, false}, {true, false, false, true}, {false, true, true, true} });
+        });
+
+        String expectedMessage = "PUV has the wrong dimensions.\n";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+  
+    /**
      * Tests so that the PUM function throws an exception if it gets arguments with bad dimensions.
      */
     @Test
