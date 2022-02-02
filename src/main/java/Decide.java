@@ -47,6 +47,13 @@ public class Decide {
         return false;
     }
 
+    /**
+     * Check that LIC1 is true.
+     *
+     * @return true if there exists at least one set of three consecutive data points that cannot all be contained
+     * within or on a circle of radius RADIUS1.
+     * @throws IllegalParameterObjectException
+     */
     public boolean LIC1() throws IllegalParameterObjectException {
         if(parameters.getRADIUS1() < 0) {
             throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
