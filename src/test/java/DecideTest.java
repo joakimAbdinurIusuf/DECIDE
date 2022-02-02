@@ -126,9 +126,9 @@ public class DecideTest {
      */
     @Test
     public void LIC2NegativeCase() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}};
+        double[][] points = new double[][]{{5.0, 5.0}, {2.0, 2.0}, {3.0, 5.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 0, 0.9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Parameters parameters = new Parameters(0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC2False = decide.LIC2();
         assertFalse(LIC2False);
