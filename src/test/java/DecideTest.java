@@ -84,7 +84,7 @@ public class DecideTest {
     }
 
     @Test
-    public void LIC1Exception () {
+    public void LIC1Exception() {
         double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
 
         int numpoints = points.length;
@@ -717,6 +717,101 @@ public class DecideTest {
     }
 
     // LIC13
+
+    /**
+     * Check that LIC13 returns true if there exists at least one set of three consecutive data points
+     * that cannot all be contained within or on a circle of radius RADIUS1, and another set that can
+     * be contained within or on a circle of RADIUS2.
+     */
+    @Test
+    public void LIC13PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13True = decide.LIC13();
+        assertTrue(LIC13True);
+    }
+
+    /**
+     * Check that LIC13 returns false if there does not exist at least one set of three consecutive data
+     * points that cannot all be contained within or on a circle of radius RADIUS1.
+     */
+    @Test
+    public void LIC13NegativeCaseRadius1() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13False = decide.LIC13();
+        assertFalse(LIC13False);
+    }
+
+    /**
+     * Check that LIC13 returns false if there does not exist at least one set of three consecutive data
+     * points that can all be contained within or on a circle of radius RADIUS2.
+     */
+    @Test
+    public void LIC13NegativeCaseRadius2() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13False = decide.LIC13();
+        assertFalse(LIC13False);
+    }
+
+    /**
+     * Check that LIC13 returns false if there does not exist at least one set of three consecutive data
+     * points that cannot all be contained within or on a circle of radius RADIUS1, and if there does not
+     * exist another set that can be contained within or on a circle of RADIUS2.
+     * .
+     */
+    @Test
+    public void LIC13NegativeCaseBothConditionsFalse() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13False = decide.LIC13();
+        assertFalse(LIC13False);
+    }
+
+    @Test
+    public void LIC13ExceptionRadius1() {
+        double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC13();
+        });
+
+        String expectedMessage = "RADIUS1 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void LIC13ExceptionRadius2() {
+        double[][] points = new double[][]{{1.0D, 1.0D}, {100.0, 100.0}};
+
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            decide.LIC13();
+        });
+
+        String expectedMessage = "RADIUS2 cannot be negative.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 
     // LIC14
 
