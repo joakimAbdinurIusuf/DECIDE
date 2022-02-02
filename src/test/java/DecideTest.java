@@ -756,9 +756,9 @@ public class DecideTest {
      */
     @Test
     public void LIC13NegativeCaseRadius2() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {0.0, 0.0}, {0.0, 0.0}, {10.0, 10.0}};
+        double[][] points = new double[][]{{1.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}, {0.0, 0.1}, {1.0, 0.0}, {-10.0, -10.0}, {1.1, 0.0}, {0.0, 0.5}, {10.0, 10.0}};
         int numpoints = points.length;
-        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1, 0);
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
         boolean LIC13False = decide.LIC13();
         assertFalse(LIC13False);
