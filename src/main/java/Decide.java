@@ -372,6 +372,21 @@ public class Decide {
         return false;
     }
 
+    public double calculateAngle(double[] point1, double[] point2, double[] point3) {
+        double xDifference1, yDifference1, xDifference2, yDifference2, dotProduct, norm1, norm2, angle;
+        xDifference1 = point1[0] - point2[0]; // p1 - p2
+        yDifference1 = point1[1] - point2[1];
+        xDifference2 = point3[0] - point2[0]; // p3 - p2
+        yDifference2 = point3[1] - point2[1];
+
+        dotProduct = xDifference1 * xDifference2 + yDifference1 * yDifference2;
+        norm1 = Math.sqrt(Math.pow(xDifference1, 2) + Math.pow(yDifference1, 2));
+        norm2 = Math.sqrt(Math.pow(xDifference2, 2) + Math.pow(yDifference2, 2));
+
+        angle = Math.acos(dotProduct / (norm1 * norm2));
+        return angle;
+    }
+
     /**
      * Check if LIC10 is true.
      *
