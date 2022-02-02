@@ -575,6 +575,12 @@ public class DecideTest {
         assertTrue(LIC9True);
     }
 
+    /**
+     * Tests if LIC9 returns true if there doesn't exists at least one set of three data points separated by exactly
+     * C_PTS and D_PTS consecutive intervening points, respectively, that form an angle such that
+     * angle < (pi - epsilon) or angle > (pi + epsilon)
+     * @throws IllegalParameterObjectException
+     */
     @Test
     public void LIC9NegativeCase() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{5.0, 5.0}, {1.0, 1.0}, {2.0, 2.0}, {1.0, 0.0}, {1.0, 0.0}, {1.0, 0.0}, {3.0, 5.0}};
