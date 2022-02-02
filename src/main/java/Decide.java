@@ -375,8 +375,12 @@ public class Decide {
      * @throws IllegalParameterObjectException
      */
     public boolean LIC13() throws IllegalParameterObjectException {
-        if(parameters.getRADIUS1() < 0) {
+        if (parameters.getRADIUS1() < 0) {
             throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
+        } else if (parameters.getRADIUS2() < 0) {
+            throw new IllegalParameterObjectException("RADIUS2 cannot be negative.");
+        } else if (numpoints < 5) {
+            return false;
         }
 
         for (int i = 0; i < numpoints - 2; i++) {
