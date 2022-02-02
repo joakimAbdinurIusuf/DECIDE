@@ -649,6 +649,80 @@ public class DecideTest {
 
     // LIC11
 
+    /**
+     * Checks so that LIC11 returns false if NUMPOINTS < 3
+     */
+    @Test
+    public void LIC11NegativeCase1() throws IllegalParameterObjectException {
+        int numpoints = 2;
+        Decide d = new Decide(numpoints, null, null, null, null);
+        assertFalse(d.LIC11());
+    }
+
+    /**
+     * Checks so that LIC11 returns true when two data points exist that are separated by G_PTS consecutive 
+     * points, such that X[j] - X[i] < 0 (i<j)
+     */
+    @Test
+    public void LIC11PositiveCase1() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {-1.0, 0.0}, {-2.0, 0.0}, {-3.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0);
+        Decide d = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        assertTrue(d.LIC11());
+    }
+
+    /**
+     * Checks so that LIC11 returns false when there exists no two data points that are separated by G_PTS consecutive 
+     * points, such that X[j] - X[i] < 0 (i<j)
+     */
+    @Test
+    public void LIC11NegativeCase2() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{-3.0, 0.0}, {-2.0, 0.0}, {-1.0, 0.0}, {0.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0);
+        Decide d = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        assertFalse(d.LIC11());
+    }
+
+    /**
+     * Checks so that LIC11 throws an exception if G_PTS > NUMPOINTS - 2
+     */
+    @Test
+    public void LIC11Exception1() {
+        double[][] points = new double[][]{{0.0, 0.0}, {-1.0, 0.0}, {-2.0, 0.0}, {-3.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0);
+        Decide d = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            d.LIC11();
+        });
+
+        String expectedMessage = "G_PTS should be less than or equal to NUMPOINTS - 2\n";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Checks so that LIC11 throws an exception if G_PTS < 1
+     */
+    @Test
+    public void LIC11Exception2() {
+        double[][] points = new double[][]{{0.0, 0.0}, {-1.0, 0.0}, {-2.0, 0.0}, {-3.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0);
+        Decide d = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        Exception exception = assertThrows(IllegalParameterObjectException.class, () -> {
+            d.LIC11();
+        });
+
+        String expectedMessage = "G_PTS should be greater than 1\n";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
     // LIC12
 
     /**
