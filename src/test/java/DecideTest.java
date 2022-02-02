@@ -557,6 +557,39 @@ public class DecideTest {
 
     // LIC8
 
+    /**
+     * Tests if LIC8 returns true if there exists at least one set of three data points separated by exactly
+     * A PTS and B PTS consecutive intervening points, respectively, that cannot be contained within or on a circle
+     * of radius RADIUS1
+     * @throws IllegalParameterObjectException
+     */
+    @Test
+    public void LIC8PositiveCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC8True = decide.LIC8();
+        assertTrue(LIC8True);
+    }
+
+    /**
+     * Tests if LIC8 returns false if there doesn't exists at least one set of three data points separated by exactly
+     * A_PTS and B_PTS consecutive intervening points, respectively, that cannot be contained within or on a circle
+     * of radius RADIUS1.
+     * @throws IllegalParameterObjectException
+     */
+    @Test
+    public void LIC8NegativeCase() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 1.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {1.0, 0.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 5, 0, 0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC8False = decide.LIC8();
+        assertFalse(LIC8False);
+    }
+
+
     // LIC9
 
     /**
