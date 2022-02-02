@@ -13,14 +13,47 @@ public class Decide {
         this.puv = puv;
     }
 
-    public void DECIDE() {
+    public void DECIDE() throws IllegalParameterObjectException {
+        if (points.length > 100) {
+            throw new IllegalParameterObjectException("Too many datapoints.\n");
+        }
+        if (numpoints != points.length) {
+            throw new IllegalParameterObjectException("Numpoints does not match the length of the points array.\n");
+        }
+        boolean launch = true;
         try {
-            // Code to call LIC-methods will be added later
-            System.out.println("NO");
+            boolean[] CMV = new boolean[15];
+            CMV[0] = LIC0();
+            CMV[1] = LIC1();
+            CMV[2] = LIC2();
+            CMV[3] = LIC3();
+            CMV[4] = LIC4();
+            CMV[5] = LIC5();
+            CMV[6] = LIC6();
+            CMV[7] = LIC7();
+            CMV[8] = LIC8();
+            CMV[9] = LIC9();
+            CMV[10] = LIC10();
+            CMV[11] = LIC11();
+            CMV[12] = LIC12();
+            CMV[13] = LIC13();
+            CMV[14] = LIC14();
+            boolean[][] pum = PUM(CMV);
+            boolean[] fuv = FUV(pum);
+            for (int i = 0; i < CMV.length; i++) {
+                if (!fuv[i]) {
+                    launch = false;
+                    break;
+                }
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid input: " + e.getMessage() );
         }
-
+        if (launch) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
     }
 
     /**
