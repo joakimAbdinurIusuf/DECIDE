@@ -103,21 +103,11 @@ public class Decide {
             throw new IllegalParameterObjectException("Epsilon must be greater than 0 and less than pi.");
         }
 
-        double xDifference1, yDifference1, xDifference2, yDifference2, dotProduct, norm1, norm2, angle;
+        double angle;
 
         for (int i = 1; i < numpoints - 1; i++) {
             if(!(points[i - 1] == points[i]) || (points[i + 1] == points[i])) {
                 angle = calculateAngle(points[i - 1], points[i], points[i + 1]);
-               /* xDifference1 = points[i][0] - points[i - 1][0];
-                yDifference1 = points[i][1] - points[i - 1][1];
-                xDifference2 = points[i + 1][0] - points[i][0];
-                yDifference2 = points[i + 1][1] - points[i][1];
-
-                dotProduct = xDifference1 * xDifference2 + yDifference1 * yDifference2;
-                norm1 = Math.sqrt(Math.pow(xDifference1, 2) + Math.pow(yDifference1, 2));
-                norm2 = Math.sqrt(Math.pow(xDifference2, 2) + Math.pow(yDifference2, 2));
-
-                angle = Math.acos(dotProduct / (norm1 * norm2));*/
 
                 if (angle < (Math.PI - parameters.getEPSILON()) || angle > (Math.PI + parameters.getEPSILON())) {
                     return true;
