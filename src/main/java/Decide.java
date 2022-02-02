@@ -346,23 +346,14 @@ public class Decide {
             return false;
         }
 
-        double xDifference1, yDifference1, xDifference2, yDifference2, dotProduct, norm1, norm2, angle;
+        double angle;
 
         int C_PTS = parameters.getC_PTS();
         int D_PTS = parameters.getD_PTS();
 
         for (int i = 0; i < numpoints - 2 - C_PTS - D_PTS; i++) {
             if(!(points[i] == points[i + C_PTS + 1]) || (points[i + C_PTS + D_PTS + 2] == points[i + C_PTS + 1])) {
-                xDifference1 = points[i][0] - points[i + C_PTS + 1][0]; // (p2 + C_PTS) - p1
-                yDifference1 = points[i][1] - points[i + C_PTS + 1][1];
-                xDifference2 = points[i + C_PTS + D_PTS + 2][0] - points[i + C_PTS + 1][0]; // (p3 + D_PTS) - (p2 + C_PTS)
-                yDifference2 = points[i + C_PTS + D_PTS + 2][1] - points[i + C_PTS + 1][1];
-
-                dotProduct = xDifference1 * xDifference2 + yDifference1 * yDifference2;
-                norm1 = Math.sqrt(Math.pow(xDifference1, 2) + Math.pow(yDifference1, 2));
-                norm2 = Math.sqrt(Math.pow(xDifference2, 2) + Math.pow(yDifference2, 2));
-
-                angle = Math.acos(dotProduct / (norm1 * norm2));
+                angle = calculateAngle(points[i], points[i + C_PTS + 1], points[i + C_PTS + D_PTS + 2]);
 
                 if (angle < (Math.PI - parameters.getEPSILON()) || angle > (Math.PI + parameters.getEPSILON())) {
                     return true;
