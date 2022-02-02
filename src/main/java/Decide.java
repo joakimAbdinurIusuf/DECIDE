@@ -299,6 +299,33 @@ public class Decide {
         }
     }
 
+    /** Checks if LIC8 is true
+     *
+     * @return true if there exists at least one set of three data points separated by exactly A_PTS and B_PTS
+     * consecutive intervening points, respectively, that cannot be contained within or on a circle of radius RADIUS1
+     */
+    public boolean LIC8() throws IllegalParameterObjectException{
+        if (parameters.getA_PTS() < 1) {
+            throw new IllegalParameterObjectException("A_PTS must be greater or equal to 1.");
+        } else if (parameters.getB_PTS() < 1) {
+            throw new IllegalParameterObjectException("B_PTS must be greater or equal to 1.");
+        } else if (parameters.getA_PTS() + parameters.getB_PTS() > numpoints - 3) {
+            throw new IllegalParameterObjectException("The sum of A_PTS and B_PTS must be less than or equal to numpoints - 3.");
+        } else if (numpoints < 5) {
+            return false;
+        }
+        int A_PTS = parameters.getA_PTS();
+        int B_PTS = parameters.getB_PTS();
+
+        for (int i = 0; i < numpoints - 2 - A_PTS - B_PTS; i++) {
+            if (!isPointsContainedInCircle(points[i], points[i+1+A_PTS], points[i+2+B_PTS], parameters.getRADIUS1())) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     /** Checks if LIC9 is true.
      *
      * @return true if there exists at least one set of three data points separated by exactly
