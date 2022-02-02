@@ -61,36 +61,6 @@ public class Decide {
     }
 
     /**
-     * Checks if three points are all contained within or on a circle with a given radius
-     *
-     * @return true if all the points are contained within or on a circle with the given radius
-     */
-    public boolean isPointsContainedInCircle(double[] point1, double[] point2, double[] point3, double radius) {
-        double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
-
-        distanceP1P2 = distanceBetween2Points(point1, point2);
-        distanceP1P3 = distanceBetween2Points(point1, point3);
-        distanceP2P3 = distanceBetween2Points(point2, point3);
-
-        triangleArea = triangleArea(point1, point2, point3);
-
-        if (triangleArea != 0) {
-            diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
-
-            if (diameter/2 <= radius) {
-                return true;
-            }
-        }
-        else {  // if area = 0, the points are collinear
-            maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
-            if (maxDistance <= radius) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Check if LIC2 is true.
      * Calculates the angle between three consecutive points, the second point being located at the vertex
      * of the angle.
@@ -467,6 +437,82 @@ public class Decide {
             }
         }
 
+        return false;
+    }
+
+    /**
+     * Check if LIC13 is true.
+     *
+     * @return true if there exists at least one set of three data points, separated by exactly A_PTS and
+     * B PTS consecutive intervening points, respectively, that cannot be contained within or on a circle
+     * of radius RADIUS1, and another set that can be contained in or on a circle of radius RADIUS2.
+     * @throws IllegalParameterObjectException
+     */
+    public boolean LIC13() throws IllegalParameterObjectException {
+        throwExceptionsIfIllegalValuesRad1Rad2();
+        if (numpoints < 5) {
+            return false;
+        }
+
+        double[] firstPoint, middlePoint, lastPoint;
+        int lastIndex = numpoints - parameters.getA_PTS() - parameters.getB_PTS() - 2;
+        boolean cannotBeContainedInCircleWithRADIUS1 = false;
+        boolean canBeContainedInCircleWithRADIUS2 = false;
+
+        for (int i = 0; i < lastIndex; i++) {
+            firstPoint = points[i];
+            middlePoint = points[i + parameters.getA_PTS() + 1];
+            lastPoint = points[i + parameters.getA_PTS() + parameters.getB_PTS() + 2];
+
+            if (!isPointsContainedInCircle(firstPoint, middlePoint, lastPoint, parameters.getRADIUS1())) {
+                cannotBeContainedInCircleWithRADIUS1 = true;
+            }
+            if (isPointsContainedInCircle(firstPoint, middlePoint, lastPoint, parameters.getRADIUS2())) {
+                canBeContainedInCircleWithRADIUS2 = true;
+            }
+            if (cannotBeContainedInCircleWithRADIUS1 && canBeContainedInCircleWithRADIUS2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private void throwExceptionsIfIllegalValuesRad1Rad2() throws IllegalParameterObjectException {
+        if (parameters.getRADIUS1() < 0) {
+            throw new IllegalParameterObjectException("RADIUS1 cannot be negative.");
+        } else if (parameters.getRADIUS2() < 0) {
+            throw new IllegalParameterObjectException("RADIUS2 cannot be negative.");
+        }
+    }
+
+    /**
+     * Checks if three points are all contained within or on a circle with a given radius
+     *
+     * @return true if all the points are contained within or on a circle with the given radius
+     */
+    public boolean isPointsContainedInCircle(double[] point1, double[] point2, double[] point3, double radius) {
+        double distanceP1P2, distanceP1P3, distanceP2P3, triangleArea, diameter, maxDistance;
+
+        distanceP1P2 = distanceBetween2Points(point1, point2);
+        distanceP1P3 = distanceBetween2Points(point1, point3);
+        distanceP2P3 = distanceBetween2Points(point2, point3);
+
+        triangleArea = triangleArea(point1, point2, point3);
+
+        if (triangleArea != 0) {
+            diameter = (distanceP1P2 * distanceP1P3 * distanceP2P3) / (2 * triangleArea);
+
+            if (diameter/2 <= radius) {
+                return true;
+            }
+        }
+        else {  // if area = 0, the points are collinear
+            maxDistance = Math.max(distanceP1P2, Math.max(distanceP1P3, distanceP2P3));
+            if (maxDistance <= radius) {
+                return true;
+            }
+        }
         return false;
     }
 
