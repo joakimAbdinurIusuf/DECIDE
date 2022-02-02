@@ -725,7 +725,7 @@ public class DecideTest {
      */
     @Test
     public void LIC13PositiveCase() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
@@ -739,7 +739,7 @@ public class DecideTest {
      */
     @Test
     public void LIC13NegativeCaseRadius1() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
@@ -753,7 +753,7 @@ public class DecideTest {
      */
     @Test
     public void LIC13NegativeCaseRadius2() throws IllegalParameterObjectException {
-        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
         Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
@@ -769,6 +769,20 @@ public class DecideTest {
      */
     @Test
     public void LIC13NegativeCaseBothConditionsFalse() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+        Decide decide = new Decide(numpoints, points, parameters, (LCM)null, (boolean[])null);
+        boolean LIC13False = decide.LIC13();
+        assertFalse(LIC13False);
+    }
+
+    /**
+     * Check that LIC13 returns false when numpoints < 5.
+     * .
+     */
+    @Test
+    public void LIC13NegativeCaseNumpoints() throws IllegalParameterObjectException {
         double[][] points = new double[][]{{0.0, 0.0}, {0.0, 0.0}, {-10.0, -10.0}, {10.0, 10.0}};
         int numpoints = points.length;
         Parameters parameters = new Parameters(0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
