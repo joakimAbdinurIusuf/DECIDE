@@ -46,7 +46,7 @@ public class Decide {
                     break;
                 }
             }
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalParameterObjectException e) {
             System.out.println("Invalid input: " + e.getMessage() );
         }
         if (launch) {
