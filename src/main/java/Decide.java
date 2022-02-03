@@ -679,7 +679,7 @@ public class Decide {
             }
             FUV[i] = true;
             for (int j = 0; j < PUM[0].length; j++) {
-                if (!PUM[i][j]) {
+                if (i != j && !PUM[i][j]) {
                     FUV[i] = false;
                     break;
                 }

@@ -44,6 +44,28 @@ public class MainTest {
     }
 
     /**
+     *
+     * @throws IllegalParameterObjectException
+     */
+    @Test
+    public void DECIDEPositive2() throws IllegalParameterObjectException {
+        double[][] points = new double[][]{{1.0, 1.0}, {100.0, 100.0}, };
+        int numpoints = points.length;
+        Parameters parameters = new Parameters(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3);
+        Logic[][] m = new Logic[15][15];
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                m[i][j] = Logic.NOTUSED;
+            }
+        }
+        LCM lcm = new LCM(m);
+        boolean[] puv = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+        Decide decide = new Decide(numpoints, points, parameters, lcm, puv);
+        decide.DECIDE();
+        assertEquals("YES", output.toString().trim());
+    }
+
+    /**
      * Checks so that if the PUV is true, the LCM contains only ANDD operations, 
      * but not all the LIC are met, the DECIDE function prints NO to the standard output.
      * @throws IllegalParameterObjectException
