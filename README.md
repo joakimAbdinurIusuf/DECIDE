@@ -16,6 +16,10 @@ Test: `gradle test`
 
 # Statement of contributions
 
+## Contribution to p+
+- Linking to issues in PR
+- Including labels to issues and PRs
+
 ### Asta Olofsson
 - Created the structure of the code (code skeleton to start working with)
 - Set up Gradle
